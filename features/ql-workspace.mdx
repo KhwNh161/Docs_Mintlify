@@ -1,0 +1,81 @@
+---
+title: "Quản lý Workspace"
+sidebarTitle: "Quản lý Workspace"
+description: "Quản lý Workspace - AI Hive Documentation"
+---
+
+# Quản lý Thành viên & Phân quyền
+
+
+Để vận hành hệ thống AI hiệu quả, AIHive cho phép bạn mời đồng nghiệp cùng tham gia vào Workspace (Không gian làm việc) với các vai trò và quyền hạn khác nhau, đảm bảo tính bảo mật và chuyên môn hóa.
+
+
+---
+
+
+## Quy trình Mời thành viên mới
+
+
+Để thêm nhân sự vào hệ thống, bạn cần thực hiện các bước sau:
+
+
+### Bước 1: Truy cập trang quản lý
+
+1. Tại giao diện chính của mode **Trình xây dựng**, nhấn vào **Thành viên** ở thanh sidebar bên trái
+
+![image.png](/images/features/features-082c9d7b.png)
+
+
+### Bước 2: Gửi lời mời
+
+1. Nhấn nút **+ Mời thành viên (+ Invite Member)**  ở góc phải.
+2. Nhập **Email** của người cần mời.
+3. **Quan trọng:** Chọn **Vai trò (Role)** phù hợp cho họ (Xem chi tiết ý nghĩa các vai trò ở phần 2).
+4. Nhấn **Gửi (Send)**.
+
+![d100f78f-cdb2-4b1e-a44e-2f1809e6be62.png](/images/features/features-bed1f5a3.png)
+
+
+---
+
+
+## Giải thích Quyền hạn (Roles & Permissions)
+
+
+AIHive phân chia quyền hạn chặt chẽ để đảm bảo an toàn dữ liệu. Dưới đây là bảng phân quyền chi tiết:
+
+
+| Vai trò (Role)                         | Quyền hạn & Mô tả                                                                                                                                                  | Đối tượng phù hợp                                |
+| -------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------ |
+| **Owner**(Chủ sở hữu)                  | **Toàn quyền kiểm soát:**• Quản lý gói cước (Billing).• Xóa Workspace.• Quản lý tất cả Agent và Thành viên.• Không thể bị xóa khỏi hệ thống.                       | Giám đốc, Chủ doanh nghiệp, Người tạo tài khoản. |
+| **Admin**(Quản trị viên)               | **Quản lý vận hành:**• Tạo/Sửa/Xóa Agent.• Mời hoặc xóa thành viên (trừ Owner).• Xem tất cả báo cáo và lịch sử chat.❌ Không thể can thiệp vào thanh toán/gói cước. | Trưởng phòng kỹ thuật, Leader đội CSKH.          |
+| **Editor**(Biên tập viên)              | **Xây dựng Bot:**• Cấu hình Prompt, Flow, Knowledge.• Chỉnh sửa Agent.❌ Không thể xóa Agent, không thể mời thành viên, không xem được cấu hình hệ thống.           | Nhân viên kỹ thuật, Content Creator, AI Trainer. |
+| **Normal / Viewer**(Thành viên thường) | **Sử dụng cơ bản:**• Chỉ được xem và Chat thử với Bot.• Xem Log chat (nếu được cấp quyền).❌ Không xem được Prompt, không sửa được cấu hình.                        | Nhân viên CSKH, Tester, Thực tập sinh.           |
+
+
+![image.png](/images/features/features-d8ca0b43.png)
+
+
+---
+
+
+## Quản lý thành viên hiện có
+
+
+Bạn có thể thay đổi quyền hạn hoặc loại bỏ thành viên bất cứ lúc nào.
+
+
+### Chỉnh sửa quyền (Change Role)
+
+1. Tại danh sách thành viên, tìm người cần sửa.
+2. Bấm vào vai trò hiện tại của họ (Ví dụ: _Editor_).
+3. Chọn vai trò mới từ danh sách thả xuống. Hệ thống sẽ tự động lưu.
+
+### Xóa thành viên (Remove)
+
+1. Bấm vào biểu tượng **Thùng rác** (hoặc dấu 3 chấm -> Remove) ở cuối dòng tên thành viên.
+2. Xác nhận xóa.
+    - _Lưu ý:_ Sau khi xóa, người đó sẽ mất quyền truy cập ngay lập tức. Các Agent do người đó tạo ra vẫn được giữ lại trong Workspace.
+
+![image.png](/images/features/features-20ba0059.png)
+

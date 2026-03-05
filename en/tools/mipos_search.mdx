@@ -1,0 +1,90 @@
+---
+title: "POS Integration for Product Consultation"
+sidebarTitle: "POS Integration for Product Consultation"
+description: "POS Integration for Product Consultation - AI Hive Documentation"
+---
+
+# MiPos Integration (Product Search)
+
+
+The **MiPos** tool allows your AI Agent to access your product database directly on MiPos to search, quote, and send product information to customers during conversations.
+
+
+---
+
+
+## Implementation Process
+
+
+### Step 1: Prepare Data on MiPos
+
+
+First, ensure you have an account and products on the MiPos system.
+
+1. Register and log in to the MiPos admin page.
+2. Create a new **Shop** (Store).
+3. Add all products to that Shop (ensure fields like Name, Price, and Images are filled).
+
+![image.png](/images/tools/tools-e2b25c61.png)
+
+
+### Step 2: Add MiPos Tool to Agent
+
+
+Return to the **AIHive Studio** interface to connect.
+
+1. Select the Agent you want to integrate -> Go to the **Configuration** tab.
+2. Scroll down to the **Tools / CRM, ERP Integration** section.
+3. Click the **+ Add** button.
+
+![image.png](/images/tools/tools-3ecc29af.png)
+
+
+In the list that appears, find and select the **"MiPos Product Search"** tool.
+
+
+![image.png](/images/tools/tools-9c30097e.png)
+
+
+### Step 3: Configure Connection (API Key)
+
+
+For the Agent to "communicate" with your Shop, you need to provide the connection key.
+
+1. After adding the tool, click the **Settings icon (⚙️ or ℹ️)** next to the MiPos tool.
+2. An input form appears requesting 2 parameters:
+    - **API Key:** Security key.
+    - **Shop ID:** Store identifier.
+
+![image.png](/images/tools/tools-e78c155a.png)
+
+> 💡 How to get this information:
+> 1. Open the **MiPos** admin page in a new tab.
+> 2. Go to **Settings** (or **API Developer** section).
+> 3. Copy the `API Key` and `Shop ID`.
+> 4. Paste them back into the AIHive Studio configuration form.
+>
+
+![image.png](/images/tools/tools-fd8b5622.png)
+
+
+![image.png](/images/tools/tools-7e7984dc.png)
+
+
+Click **Save** to complete the connection.
+
+
+---
+
+
+## Test Operation
+
+
+After saving, verify the integration:
+
+1. Open the Chat Preview.
+2. Ask the Bot a query like: _"Find me lipstick"_ or _"Show me the price of product X"_.
+3. If the Bot returns the correct product cards from your MiPos inventory, you have connected successfully!
+
+![image.png](/images/tools/tools-90d512e0.png)
+

@@ -1,0 +1,301 @@
+{
+  "$schema": "https://mintlify.com/docs.json",
+  "theme": "aspen",
+  "name": "AI Hive Docs",
+  "appearance": {
+    "default": "dark"
+  },
+  "colors": {
+    "primary": "#7C5CFC",
+    "light": "#A78BFA",
+    "dark": "#5B3FD4"
+  },
+  "favicon": "/aihive-favicon.svg",
+  "search": {
+    "prompt": "Search docs / Tìm kiếm..."
+  },
+  "navigation": {
+    "tabs": [
+      {
+        "tab": "Hướng dẫn",
+        "groups": [
+          {
+            "group": "Giới thiệu",
+            "pages": [
+              "index",
+              "introduction/tong-quan",
+              "introduction/kien-truc",
+              "introduction/thuat-ngu"
+            ]
+          },
+          {
+            "group": "Bắt đầu",
+            "pages": [
+              "getting-started/dang-ky",
+              "getting-started/giao-dien"
+            ]
+          },
+          {
+            "group": "Tạo và cấu hình Agent",
+            "pages": [
+              "agents/tao_agent_basic",
+              "agents/agent_nangcao"
+            ]
+          },
+          {
+            "group": "Kiến thức",
+            "pages": [
+              "knowledge/them-kienthuc"
+            ]
+          },
+          {
+            "group": "Tools",
+            "pages": [
+              "tools/mipos_search",
+              "tools/mipos_order"
+            ]
+          },
+          {
+            "group": "Work Flow",
+            "pages": [
+              "workflow/work-flow"
+            ]
+          },
+          {
+            "group": "Chat Flow",
+            "pages": [
+              "chatflow/chat-flow"
+            ]
+          },
+          {
+            "group": "Tính năng mở rộng",
+            "pages": [
+              "features/ql-workspace",
+              "features/bao-cao-tong-quan",
+              "features/lich-su-hoi-thoai"
+            ]
+          },
+          {
+            "group": "Kết nối đa kênh",
+            "pages": [
+              "channels/tich-hop-messenger"
+            ]
+          },
+          {
+            "group": "Developers",
+            "pages": [
+              "developers/developers"
+            ]
+          },
+          {
+            "group": "FAQ",
+            "pages": [
+              "faq/faq"
+            ]
+          }
+        ]
+      }
+    ],
+    "global": {
+      "anchors": [
+        {
+          "anchor": "Tài liệu",
+          "href": "/",
+          "icon": "book-open-cover"
+        }
+      ]
+    },
+    "languages": [
+      {
+        "language": "vi",
+        "tabs": [
+          {
+            "tab": "Hướng dẫn",
+            "groups": [
+              {
+                "group": "Giới thiệu",
+                "pages": [
+                  "index",
+                  "introduction/tong-quan",
+                  "introduction/kien-truc",
+                  "introduction/thuat-ngu"
+                ]
+              },
+              {
+                "group": "Bắt đầu",
+                "pages": [
+                  "getting-started/dang-ky",
+                  "getting-started/giao-dien"
+                ]
+              },
+              {
+                "group": "Tạo và cấu hình Agent",
+                "pages": [
+                  "agents/tao_agent_basic",
+                  "agents/agent_nangcao"
+                ]
+              },
+              {
+                "group": "Kiến thức",
+                "pages": [
+                  "knowledge/them-kienthuc"
+                ]
+              },
+              {
+                "group": "Tools",
+                "pages": [
+                  "tools/mipos_search",
+                  "tools/mipos_order"
+                ]
+              },
+              {
+                "group": "Work Flow",
+                "pages": [
+                  "workflow/work-flow"
+                ]
+              },
+              {
+                "group": "Chat Flow",
+                "pages": [
+                  "chatflow/chat-flow"
+                ]
+              },
+              {
+                "group": "Tính năng mở rộng",
+                "pages": [
+                  "features/ql-workspace",
+                  "features/bao-cao-tong-quan",
+                  "features/lich-su-hoi-thoai"
+                ]
+              },
+              {
+                "group": "Kết nối đa kênh",
+                "pages": [
+                  "channels/tich-hop-messenger"
+                ]
+              },
+              {
+                "group": "Developers",
+                "pages": [
+                  "developers/developers"
+                ]
+              },
+              {
+                "group": "FAQ",
+                "pages": [
+                  "faq/faq"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "language": "en",
+        "tabs": [
+          {
+            "tab": "Guide",
+            "groups": [
+              {
+                "group": "Introduction",
+                "pages": [
+                  "en/index",
+                  "en/introduction/tong-quan",
+                  "en/introduction/kien-truc",
+                  "en/introduction/thuat-ngu"
+                ]
+              },
+              {
+                "group": "Getting Started",
+                "pages": [
+                  "en/getting-started/dang-ky",
+                  "en/getting-started/giao-dien"
+                ]
+              },
+              {
+                "group": "Agent Setup",
+                "pages": [
+                  "en/agents/tao_agent_basic",
+                  "en/agents/agent_nangcao"
+                ]
+              },
+              {
+                "group": "Knowledge Base",
+                "pages": [
+                  "en/knowledge/them-kienthuc"
+                ]
+              },
+              {
+                "group": "Tools",
+                "pages": [
+                  "en/tools/mipos_search",
+                  "en/tools/mipos_order"
+                ]
+              },
+              {
+                "group": "Work Flow",
+                "pages": [
+                  "en/workflow/work-flow"
+                ]
+              },
+              {
+                "group": "Chat Flow",
+                "pages": [
+                  "en/chatflow/chat-flow"
+                ]
+              },
+              {
+                "group": "Advanced Features",
+                "pages": [
+                  "en/features/ql-workspace",
+                  "en/features/bao-cao-tong-quan",
+                  "en/features/lich-su-hoi-thoai"
+                ]
+              },
+              {
+                "group": "Channels",
+                "pages": [
+                  "en/channels/tich-hop-messenger"
+                ]
+              },
+              {
+                "group": "Developers",
+                "pages": [
+                  "en/developers/developers"
+                ]
+              },
+              {
+                "group": "FAQ",
+                "pages": [
+                  "en/faq/faq"
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "logo": {
+    "light": "/logo/aihive-logo.svg",
+    "dark": "/logo/aihive-logo-dark.svg"
+  },
+  "navbar": {
+    "links": [
+      {
+        "label": "FAQs",
+        "href": "/faq/faq"
+      },
+      {
+        "label": "Changelog",
+        "href": "/changelog"
+      }
+    ],
+    "primary": {
+      "type": "button",
+      "label": "Try AI Hive ↗",
+      "href": "https://app.aihive.global"
+    }
+  },
+  "footer": {}
+}

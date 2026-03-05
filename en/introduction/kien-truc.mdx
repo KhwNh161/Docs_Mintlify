@@ -1,0 +1,36 @@
+---
+title: "Architecture"
+sidebarTitle: "Architecture"
+description: "Architecture - AI Hive Documentation"
+---
+
+# System Architecture
+
+
+The AIHive system is designed with a 3-layer architecture, ensuring stability, security, and flexible scalability for businesses.
+
+
+## Communication Layer
+
+
+This is the "gateway" that receives information from customers. AIHive supports multi-directional connections through API and Webhooks:
+
+- **Input:** Receives text messages, images, and audio files from platforms (Facebook, Zalo, Web Widget...).
+- **Output:** Responds to customers in the appropriate format for that platform (Text, Product Cards, Buttons).
+
+## Intelligence Layer
+
+
+This is the central "brain" that processes data:
+
+- **LLM Core:** Uses large language models (such as GPT, Claude, Gemini) to understand customer intent and emotions.
+- **Knowledge Base (RAG):** A system that searches business data (Policies, Product Documentation) to provide context for AI, ensuring accurate answers without "hallucination".
+- **Vision Engine:** A specialized module for processing and analyzing product images sent by customers.
+
+## Integration Layer
+
+
+This is the "arm" that executes actions:
+
+- **CRM/POS Connectors:** Connection gateways to sales software (Mipos, KiotViet, Haravan, [Nhanh.vn](http://nhanh.vn/)...) to read/write order and inventory data.
+- **ERP Connectors:** Connections to large management systems (Odoo, Salesforce, Oracle) for enterprise-scale businesses.

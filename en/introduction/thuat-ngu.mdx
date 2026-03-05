@@ -1,0 +1,52 @@
+---
+title: "Terminology"
+sidebarTitle: "Terminology"
+description: "Terminology - AI Hive Documentation"
+---
+
+# Terminology in AIHive Studio
+
+
+To use AIHive proficiently, you need to master the following basic concepts that appear in the administration interface (Studio).
+
+
+## Main Objects
+
+
+### Agent (AI Assistant)
+
+
+An independent bot entity configured to perform a specific role.
+
+- **Example:** You can create an Agent named "Sales Staff" specialized in closing orders, and another Agent named "Customer Service" specialized in handling complaints.
+- Each Agent has its own **Prompt** and **Knowledge**.
+
+### Chat Flow (Conversation Flow)
+
+
+A fixed tree-structured (Decision Tree) conversation script.
+
+- Used when you want customers to follow a mandatory process.
+- **Example:** Warranty information collection script: Ask for name → Ask for phone number → Ask about the issue.
+
+### Workflow (Work Process)
+
+
+A chain of data processing actions running in the background (Backend).
+
+- **Example:** When a customer confirms an order → Workflow will run: "Get customer information" → "Call KiotViet API to create order" → "Send confirmation message".
+
+### Knowledge
+
+
+The data repository you feed to the Bot for learning.
+
+- Data can be: Document files (PDF, Word), Website URLs, or manually entered text (Q&A).
+- This is the key factor determining the intelligence of an Agent.
+
+### Prompt (Instruction Command)
+
+
+A description of the role and tasks for the AI.
+
+- **Example:** "You are a consultant for XFashion clothing store. Cheerful tone, use many icons. Only answer questions related to fashion..."

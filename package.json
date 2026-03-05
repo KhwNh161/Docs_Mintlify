@@ -1,0 +1,15 @@
+{
+    "name": "aihive-docs",
+    "version": "1.0.0",
+    "description": "AI Hive Documentation - Synced from Notion",
+    "type": "module",
+    "scripts": {
+        "sync": "node scripts/sync-notion.mjs",
+        "dev": "mintlify dev"
+    },
+    "dependencies": {
+        "@notionhq/client": "^2.2.0",
+        "notion-to-md": "^3.1.0",
+        "dotenv": "^16.4.0"
+    }
+}

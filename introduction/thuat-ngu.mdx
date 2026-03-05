@@ -1,0 +1,52 @@
+---
+title: "Thuật ngữ"
+sidebarTitle: "Thuật ngữ"
+description: "Thuật ngữ - AI Hive Documentation"
+---
+
+# Các thuật ngữ trong AIHive Studio
+
+
+Để sử dụng thành thạo AIHive, bạn cần nắm vững các khái niệm cơ bản dưới đây xuất hiện trong giao diện quản trị (Studio).
+
+
+## Các đối tượng chính
+
+
+### Agent (Trợ lý AI)
+
+
+Là một thực thể bot độc lập được cấu hình để thực hiện một vai trò cụ thể.
+
+- **Ví dụ:** Bạn có thể tạo 1 Agent tên là "Nhân viên Sale" chuyên chốt đơn, và 1 Agent khác tên là "CSKH" chuyên giải quyết khiếu nại.
+- Mỗi Agent có **Prompt** (lời nhắc) và **Kiến thức** riêng.
+
+### Chat Flow (Luồng hội thoại)
+
+
+Là kịch bản hội thoại dạng cây (Decision Tree) được thiết kế cố định.
+
+- Dùng khi bạn muốn khách hàng đi theo một quy trình bắt buộc.
+- **Ví dụ:** Kịch bản xin thông tin bảo hành: Hỏi tên → Hỏi SĐT → Hỏi lỗi.
+
+### Workflow (Quy trình làm việc)
+
+
+Là chuỗi các hành động xử lý dữ liệu chạy ngầm (Backend).
+
+- **Ví dụ:** Khi khách chốt đơn → Workflow sẽ chạy: "Lấy thông tin khách" → "Gọi API KiotViet tạo đơn" → "Gửi tin nhắn xác nhận".
+
+### Knowledge (Kiến thức)
+
+
+Là kho dữ liệu bạn nạp vào cho Bot học.
+
+- Dữ liệu có thể là: File tài liệu (PDF, Word), Đường dẫn Website (URL), hoặc Văn bản nhập tay (Q&A).
+- Đây là yếu tố quyết định sự thông minh của Agent.
+
+### Prompt (Câu lệnh nhắc)
+
+
+Là bản mô tả vai trò và nhiệm vụ cho AI.
+
+- **Ví dụ:** "Bạn là nhân viên tư vấn của shop thời trang XFashion. Giọng điệu vui vẻ, dùng nhiều icon. Chỉ trả lời các câu hỏi liên quan đến thời trang..."

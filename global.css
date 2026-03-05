@@ -1,0 +1,42 @@
+/* AI Hive Docs – Custom styles to match Figr sidebar layout */
+
+/* Sidebar tighter to left edge */
+:root {
+  --sidebar-width: 240px;
+}
+
+/* Remove extra sidebar padding for flush-left feel */
+nav[class*="sidebar"],
+aside[class*="sidebar"],
+div[class*="sidebar"] {
+  padding-left: 8px !important;
+}
+
+/* Logo flush left */
+a[class*="logo"],
+div[class*="logo"] {
+  padding-left: 8px !important;
+  margin-left: 0 !important;
+}
+
+/* Reduce left padding on sidebar nav items */
+nav[class*="sidebar"] a,
+aside[class*="sidebar"] a {
+  padding-left: 12px !important;
+}
+
+/* Sidebar group headers flush */
+nav[class*="sidebar"] h3,
+aside[class*="sidebar"] h3,
+nav[class*="sidebar"] p[class*="group"],
+aside[class*="sidebar"] p[class*="group"] {
+  padding-left: 12px !important;
+}
+
+/* Hide "Powered by Mintlify" badge */
+a[href="https://mintlify.com"],
+a[href*="mintlify.com/preview"],
+div[class*="powered"],
+footer a[href*="mintlify"] {
+  display: none !important;
+}

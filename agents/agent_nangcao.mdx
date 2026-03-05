@@ -1,0 +1,86 @@
+---
+title: "Cấu hình Agent nâng cao"
+sidebarTitle: "Cấu hình Agent nâng cao"
+description: "Cấu hình Agent nâng cao - AI Hive Documentation"
+---
+
+# **Advanced Agent Configuration**
+
+
+Sau khi tạo Agent cơ bản, bạn có thể tinh chỉnh các thông số kỹ thuật để Bot thông minh và phù hợp hơn với nhu cầu doanh nghiệp.
+
+
+Truy cập: Vào **Studio** -> Chọn Agent cần sửa -> Tab **Cấu hình (Configuration)**.
+
+
+![58c640e5-42b7-4c6f-9b53-1bcd2a2f4517.png](/images/agents/agents-ed568868.png)
+
+
+## Thiết lập Mô hình AI (Model Settings)
+
+
+Tại khu vực bên trái màn hình, bạn sẽ thấy các thông số điều khiển "bộ não" của Bot.
+
+
+![5d836639-4e71-4271-a598-adf0449c1fa8.png](/images/agents/agents-4ecd7868.png)
+
+- **Mô hình (Model):**
+    - `GPT-4o`: Thông minh nhất, đa năng, xử lý logic phức tạp tốt. (Khuyên dùng cho Sales/CSKH).
+    - `Claude 3.5 Sonnet`: Viết văn phong tự nhiên, tình cảm hơn.
+    - `Gemini Pro`: Tốc độ phản hồi nhanh, xử lý dữ liệu lớn tốt.
+- **Nhiệt độ (Temperature):** Thanh trượt từ 0 đến 1.
+    - **Thấp (0 - 0.3):** Bot trả lời chính xác, logic, ít sáng tạo. Phù hợp cho **CSKH, Tra cứu đơn hàng**.
+    - **Cao (0.7 - 1.0):** Bot sáng tạo, bay bổng. Phù hợp cho **Marketing, Viết content**.
+
+![image.png](/images/agents/agents-d5fe4395.png)
+
+- **Token tối đa (Max Tokens):** Giới hạn độ dài câu trả lời của Bot.
+
+![image.png](/images/agents/agents-e417c424.png)
+
+
+## Tính năng Thị giác (Vision)
+
+
+Cho phép khách hàng gửi ảnh cho Bot và Bot có thể "nhìn" thấy nội dung trong đó.
+
+- **Cách bật:** Tích vào ô **"Cho phép tải lên hình ảnh" (Allow Image Upload)**.
+
+![image.png](/images/agents/agents-460f6007.png)
+
+- **Ứng dụng:**
+    - Khách gửi ảnh lỗi sản phẩm -> Bot nhận diện lỗi để bảo hành.
+    - Khách gửi ảnh mẫu váy -> Bot tìm sản phẩm tương tự trong kho.
+
+## Quản lý Biến (Variables)
+
+
+Biến giúp Bot ghi nhớ thông tin khách hàng trong suốt cuộc trò chuyện (Ví dụ: Tên, SĐT, Địa chỉ).
+
+
+![image.png](/images/agents/agents-63b99aa8.png)
+
+- **Biến hệ thống (Mặc định):** `user_name`, `language`.
+- **Biến tùy chỉnh:** Bạn có thể tạo thêm biến mới như `customer_phone`, `order_id`.
+- **Cách dùng trong Prompt:** Sử dụng cú pháp `\{\{ten_bien\}\}`.
+    - _Ví dụ:_ "Chào \{\{user_name\}\}, tôi có thể giúp gì cho bạn?"
+
+---
+
+
+## Tích hợp Công cụ (Tools)
+
+
+Để Bot có thể thực hiện hành động thật (như tra cứu kho, tính ship), bạn cần cấp "tay chân" cho nó.
+
+
+![image.png](/images/agents/agents-90a60a4f.png)
+
+- Tại mục **Tools**, nhấn **Thêm công cụ (+ Add Tool)**.
+- Chọn công cụ mong muốn từ thư viện:
+    - `CRM Tool`: Để check tồn kho, tạo đơn.
+    - `Calculator`: Để tính toán giá tiền.
+    - `Google Search`: Để tìm kiếm thông tin mới nhất trên mạng.
+
+_(Hướng dẫn chi tiết về tích hợp ERP/CRM chuyên sâu sẽ được đề cập tại Tools_.
+

@@ -1,0 +1,176 @@
+---
+title: "ChatFlow "
+sidebarTitle: "ChatFlow "
+description: "ChatFlow  - AI Hive Documentation"
+---
+
+# Guide: Building an "AI Quote Writing Assistant" with Chat Flow
+
+
+Are you tired of customers saying something vague like _"I want to build an app like Uber"_ and then demanding a detailed quote immediately? Instead of spending 2 hours writing, this tutorial will show you how to use **AIHive Chat Flow** to create a Bot that does this automatically in just 30 seconds.
+
+
+We'll use **Chat Flow** - AIHive's drag-and-drop logic graph tool. You don't need to know coding!
+
+
+## "Assembly Line" Concept
+
+
+Before getting started, imagine Chat Flow like a factory assembly line with workers sitting in sequence:
+
+- **Node (Block):** Each specialized worker (e.g., Node A specializes in analysis, Node B specializes in writing).
+- **Connectors:** Conveyor belts to transfer documents from one person to another.
+- **Variables** **`\{\{...\}\}`****:** This is the most important concept. When Worker B wants to work, they must take Worker A's result to process further.
+> 🔑 Golden Rule: To get data from a previous Node, press the \{ key (curly bracket) in the input field to open the variable list.
+
+---
+
+
+## Step-by-Step Practice
+
+
+When you create a new Chat Flow, the Canvas screen will display 2 basic blocks: **Start** and **Answer** connected together.
+
+
+### Step 1: Configure "Start" Node (Input)
+
+
+This node already exists, just click on it to edit.
+
+1. Click on the **Start** node.
+2. Ensure the configuration panel has the `sys.query` field. This is where customer chat messages are received.
+
+![image.png](/images/chatflow/chatflow-59c3df68.png)
+
+
+### Step 2: Add "BA Analysis" Node
+
+
+_Task: Read_ _`sys.query`_ _to analyze._
+
+1. Add an **LLM** node after Start, rename it to `BA_Analysis`.
+2. In the "Context" section, select: `sys.query`
+3. **Configure SYSTEM (Role):**
+    > "You are a senior Business Analyst (BA) with 10 years of experience.  
+    > Task: From the customer's rough idea, break it down into a detailed list of Functional Requirements.  
+    > Clearly divide: End-user App, Admin Web (CMS/Admin), and Backend.  
+    > Output: Only list features as bullet points, keep it concise."
+4. **Configure USER (Create context with Variables):**
+    - Type the prompt: `Analyze the following customer request:`
+    - **Insert variable:** Press `\{` key, select **sys.query**.
+    - _Correct display:_ `Analyze the following customer request: \{\{Start.sys_query\}\}`
+
+![image.png](/images/chatflow/chatflow-7f26e032.png)
+
+
+---
+
+
+### Step 3: Add "Tech Architect" Node
+
+
+_Task: Read BA's analysis result to choose technology._
+
+1. Add an **LLM** node after BA, connect to BA, rename it to `Tech_Stack`.
+2. **Configure Context:** Select `\{\{BA_Analysis.text\}\}`
+3. **Configure SYSTEM:**
+    > "You are a Solution Architect. Suggest the most optimal Tech Stack for this project.  
+    > Prioritize modern Stack:
+>     - Mobile: Flutter (Cross-platform).
+>     - Backend: Node.js (NestJS) or Supabase.
+>     - Database: PostgreSQL.
+>     Briefly explain the reasons for your choices."
+>
+4. **Configure USER (Create context with Variables):**
+    - Type: `Based on the following functional analysis:`
+    - **Insert variable:** Press `\{` key, select `\{\{BA_Analysis.text\}\}`
+    - _Correct display:_ `Based on the following functional analysis: \{\{BA_Analysis.text\}\}`
+
+![image.png](/images/chatflow/chatflow-9633cbcd.png)
+
+
+---
+
+
+### Step 4: Add "Write Quote" Node (Important)
+
+
+_Task: Read ALL previous variables to compile into a document._
+
+1. Add an **LLM** node after Tech_Stack, rename it to `Write_Quote`.
+2. In the "Context" section, select: **Tech_Stack** / **text**
+3. **Configure SYSTEM:**
+    > You are a Sales Director. Your task is to write a professional, persuasive Technical Proposal to send to the customer immediately.  
+    > Format: Beautiful Markdown.  
+    > Required structure:
+>     1. Project Overview (Understand customer pain points).
+>     2. Scope of Work (from BA).
+>     3. Technical Solution (Tech Stack - from Architect).
+>     4. Implementation Roadmap (Estimated timeline by week).
+>     5. Budget Estimate (Reference price range in USD).
+>     Tone: Professional, trustworthy, encouraging deal closure.
+>
+4. **Configure USER (Combine 3 variables into context):**
+You need to insert 3 variables sequentially for the AI to have complete information. Enter exactly as below:
+    - Type: `1. Customer request:` Press `\{`, select **Start** / **sys.query**
+    - Type: `2. Detailed features:` Press `\{`, select **BA_Analysis** / **text**
+    - Type: `3. Proposed technology:` Press `\{`, select **Tech_Stack** / **text**
+
+    The interface will look like:
+
+
+```plain text
+1. Customer request: \{\{Start.sys_query\}\}
+2. Detailed features: \{\{BA_Analysis.text\}\}
+3. Proposed technology: \{\{Tech_Stack.text\}\}
+```
+
+
+![image.png](/images/chatflow/chatflow-0a870e75.png)
+
+
+### Step 5: "Answer" Node (Return Result)
+
+
+_Task: Get the final variable and display on screen._
+
+1. Click on the **Answer** node at the end.
+2. In the **Response** field, delete all existing text.
+3. **Insert variable:** Press `\{` key, select **Write_Quote** / **text**.
+    - _Correct display:_ `\{\{Write_Quote.text\}\}`
+
+---
+
+
+## Common Error Troubleshooting
+
+
+During the process, 99% of beginners will encounter an error with red text: **"Please fill in context variable in PROMPT"**.
+
+> ⚠️ Cause: You used variable \{\{Start.query\}\} in the prompt, BUT you haven't declared it in the Context section of that Node.
+
+**Fix:**
+
+1. Look below the **System** field of the erroring Node.
+2. Find the **Context** section.
+3. Click **Add**.
+4. Select the exact variable you're using in the Prompt.
+5. The red error will disappear.
+
+---
+
+
+## Result
+
+
+Now click the **Debug and Preview** button in the top right corner.
+
+1. **Test input:** _"I want to build a medical appointment booking app."_
+2. **Result:** You'll see the Nodes light up sequentially:
+    - **BA** analyzes requirements.
+    - **Tech** chooses technology stack.
+    - **Sales** writes the proposal.
+    - **Final:** Returns a full-page professional quote.
+
+![image.png](/images/chatflow/chatflow-fd3494e9.png)
+

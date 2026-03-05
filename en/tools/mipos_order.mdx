@@ -1,0 +1,77 @@
+---
+title: "Auto Order Creation on POS"
+sidebarTitle: "Auto Order Creation on POS"
+description: "Auto Order Creation on POS - AI Hive Documentation"
+---
+
+# Automatic Order Creation with MiPos (Auto Order)
+
+
+The most advanced feature of AIHive is the ability to "close deals" automatically. The Bot will not only provide consultation but also directly create orders on the MiPos system when customers provide sufficient delivery information.
+
+
+---
+
+
+## How It Works (Important)
+
+> ⚠️ Crucial Concept:  
+> To create accurate orders, the Bot needs to know exactly which Variant the customer is buying (e.g., Red shirt, Size L) rather than just a general product name.
+
+Therefore, the configuration process must change as follows:
+
+- 🔴 **OFF:** `mipos_product_search` (Disable general search).
+- 🟢 **ON:** `mipos_search_variants` (Enable specific variant search).
+- 🟢 **ON:** `mipos_create_order` (Enable order creation).
+
+---
+
+
+## Detailed Configuration Process
+
+
+### Step 1: Adjust the Tools
+
+
+Go to **AIHive Studio** -> Select Agent -> **Configuration** tab.
+
+1. In the **Tools** section, find `mipos_product_search` (if enabled) and toggle the switch to **OFF**.
+2. Click the **+ Add Tool** button and add the following 2 tools:
+    - `mipos_search_variants`
+    - `mipos_create_order`
+
+![image.png](/images/tools/tools-8951b936.png)
+
+
+### Step 2: Configure API Connection
+
+
+You need to enter the API Key for both new tools (same process as the previous section).
+
+1. Click the **Settings icon (ℹ️)** next to the `mipos_create_order` tool.
+2. Enter **API Key** and **Shop ID** (Get these from the MiPos admin page).
+3. Repeat the same process for the `mipos_search_variants` tool.
+
+![image.png](/images/tools/tools-7f16753f.png)
+
+
+[embed]()
+
+
+## Operation Result
+
+
+After completing the configuration, when a customer chats and finalizes a purchase, the Bot will automatically execute the following process:
+
+1. **Customer:** "I'll take the red Black Rouge lipstick, phone number 0912xxx, address at..."
+2. **Bot:** Automatically calls the API to create an order in MiPos.
+3. **Response:** The Bot immediately sends the order confirmation to the customer: _"Your order has been successfully created! Thank you!"_
+
+Simultaneously, the new order will appear instantly in the MiPos admin panel without requiring manual entry by staff.
+
+
+![image.png](/images/tools/tools-1f67865a.png)
+
+
+![image.png](/images/tools/tools-5c7e8871.png)
+

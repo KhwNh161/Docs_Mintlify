@@ -1,0 +1,133 @@
+---
+title: "Work Flow"
+sidebarTitle: "Work Flow"
+description: "Work Flow - AI Hive Documentation"
+---
+
+# Hướng dẫn tạo Workflow (Quy trình tự động hóa)
+
+
+**Workflow** (Quy trình làm việc) là tính năng mạnh mẽ giúp bạn tự động hóa các tác vụ phức tạp gồm nhiều bước nối tiếp nhau (Ví dụ: Viết bài chuẩn SEO -> Dịch sang tiếng Anh -> Đăng lên Facebook).
+
+
+Khác với Chat Flow (tương tác qua lại với người dùng), Workflow chạy một mạch từ đầu đến cuối để ra kết quả.
+
+
+## Tư duy thiết kế Workflow
+
+
+Một Workflow chuẩn luôn gồm 3 thành phần chính:
+
+1. **Start (Đầu vào):** Nơi bạn nhập dữ liệu (Ví dụ: Từ khóa, Chủ đề).
+2. **Nodes (Các bước xử lý):** Các "nhân viên AI" thực hiện từng nhiệm vụ nhỏ (Viết, Dịch, Tóm tắt...).
+3. **End (Đầu ra):** Kết quả cuối cùng bạn nhận được.
+> 💡 Quy tắc vàng: Kết quả của bước trước là nguyên liệu đầu vào cho bước sau. Hãy dùng biến \{\{...\}\} để chuyển giao dữ liệu giữa các bước.
+
+---
+
+
+## Thực hành: Tạo Workflow "Viết bài chuẩn SEO"
+
+
+Trong bài hướng dẫn này, chúng ta sẽ xây dựng một quy trình tự động gồm 3 bước:
+
+- **Bước 1:** Lập dàn ý bài viết từ từ khóa.
+- **Bước 2:** Viết bài chi tiết dựa trên dàn ý.
+- **Bước 3:** Tạo tiêu đề hấp dẫn (Giật tít).
+
+### Bước 1: Khởi tạo Workflow
+
+1. Tại màn hình **Studio**, nhấn nút **Tạo mới (+)**.
+2. Chọn loại ứng dụng: **Workflow**.
+3. Đặt tên: _"Quy trình viết bài SEO"_.
+4. Nhập mô tả (không bắt buộc) và nhấn **Tạo**.
+
+![image.png](/images/workflow/workflow-b7a15baf.png)
+
+
+### Bước 2: Cấu hình đầu vào (Start Node)
+
+
+Chúng ta cần khai báo cho Bot biết người dùng sẽ nhập gì vào.
+
+1. Click vào node **Start**.
+2. Tại bảng cấu hình, nhấn **+ Add Variable** (Thêm biến).
+3. Điền thông tin biến:
+    - **Variable Name (Tên biến):** `topic` (Viết liền không dấu).
+    - **Label (Nhãn hiển thị):** `Chủ đề bài viết`.
+    - **Type (Loại):** Text.
+    - **Required (Bắt buộc):** Có.
+
+![image.png](/images/workflow/workflow-c84882c6.png)
+
+
+### Bước 3: Tạo bước "Lập dàn ý" (Node LLM 1)
+
+1. Nhấn dấu **(+)** sau node Start -> Chọn **LLM**.
+2. Đổi tên node: `Lap_Dan_Y`.
+3. **Cấu hình SYSTEM PROMPT:**
+    > "Bạn là chuyên gia SEO. Hãy lập dàn ý chi tiết (Outline) gồm 3 phần: Mở bài, Thân bài (3 ý chính), Kết bài cho chủ đề sau."
+4. **Cấu hình USER PROMPT:**
+    - Bấm `Thêm tin nhắn`
+    - Ở ô `User` Nhập: `Chủ đề:`
+    - Gõ phím `/` -> Chọn `topic` trong node `Bắt đầu`
+    - _Hiển thị:_ `Chủ đề: \{\{Bắt đầu/(x)topic\}\}`
+
+![image.png](/images/workflow/workflow-439f00a2.png)
+
+
+### Bước 4: Tạo bước "Viết bài chi tiết" (Node LLM 2)
+
+1. Nhấn dấu **(+)** sau node `Lap_Dan_Y` -> Chọn **LLM**.
+2. Đổi tên node: `Viet_Bai`.
+3. **Cấu hình SYSTEM PROMPT:**
+    > "Bạn là Copywriter chuyên nghiệp. Dựa trên dàn ý được cung cấp, hãy viết thành một bài blog hoàn chỉnh, văn phong hấp dẫn, dài khoảng 500 từ."
+4. **Cấu hình USER PROMPT:**
+    - Nhập: `Viết bài dựa trên dàn ý sau:`
+    - Gõ phím `/` -> Chọn **Lap_Dan_Y** -> Chọn `text`.
+    - _Lưu ý:_ Chọn biến `text` của node dàn ý, KHÔNG chọn biến `topic` của node Start.
+
+![image.png](/images/workflow/workflow-e01d3324.png)
+
+
+### Bước 5: Cấu hình đầu ra (End Node)
+
+
+Cuối cùng, chúng ta cần xuất bản bài viết ra màn hình.
+
+1. Kéo dây từ node `Viet_Bai` nối vào node **End**.
+2. Click vào node **End**.
+3. Tại mục **Output Variables**, nhấn **+ Add Variable**.
+4. Chọn biến nguồn:
+    - Click vào ô giá trị -> Chọn **Viet_Bai** -> Chọn `text`.
+    - Đặt tên biến đầu ra: `final_article`.
+
+![image.png](/images/workflow/workflow-fba528b4.png)
+
+
+---
+
+
+## Chạy thử và Kiểm tra (Testing)
+
+
+Trước khi dùng thật, hãy chạy thử xem quy trình có mượt không.
+
+1. Nhấn nút **Run (Chạy)** ở góc trên bên phải.
+2. Một ô nhập liệu hiện ra, yêu cầu nhập **Chủ đề bài viết**.
+3. Nhập thử: _"Lợi ích của việc uống nước cam"_.
+4. Nhấn **Run** và quan sát các node sáng đèn lần lượt.
+5. Kết quả cuối cùng sẽ hiển thị bài viết hoàn chỉnh ở khung bên phải.
+6. Sau khi đấy output ổn thì sẽ ấn `Xuất bản`
+
+![image.png](/images/workflow/workflow-f77b060d.png)
+
+
+---
+
+
+## Mẹo nâng cao (Pro Tips)
+
+- **Chèn thêm bước duyệt:** Bạn có thể thêm node **"Human Review"** (Duyệt thủ công) vào giữa để con người kiểm tra dàn ý trước khi cho Bot viết bài.
+- **Kết hợp công cụ:** Có thể chèn thêm node **Tools** (Google Search) vào đầu để Bot tự tìm kiếm thông tin mới nhất trước khi viết.
+- **Xuất ra nhiều định dạng:** Tại node End, bạn có thể xuất ra cả Dàn ý và Bài viết cùng lúc bằng cách thêm 2 biến output.

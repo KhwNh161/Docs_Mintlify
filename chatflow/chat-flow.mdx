@@ -1,0 +1,175 @@
+---
+title: "Chat Flow"
+sidebarTitle: "Chat Flow"
+description: "Chat Flow - AI Hive Documentation"
+---
+
+# Hướng dẫn: Xây dựng "Trợ lý AI viết báo giá" bằng Chat Flow
+
+
+Bạn chán cảnh khách hàng nói đại loại _"Tôi muốn làm app giống Uber"_ rồi đòi báo giá chi tiết ngay lập tức? Thay vì mất 2 tiếng ngồi viết, hướng dẫn này sẽ chỉ bạn cách dùng **AIHive Chat Flow** để tạo Bot làm việc này tự động trong 30 giây.
+
+
+Chúng ta sẽ sử dụng **Chat Flow** - công cụ kéo-thả đồ thị logic của AIHive. Bạn không cần biết code!
+
+
+## Khái niệm "Dây chuyền lắp ráp"
+
+
+Trước khi bắt đầu, hãy tưởng tượng Chat Flow như một dây chuyền sản xuất trong nhà máy:
+
+- **Node (Khối):** Mỗi nhân viên chuyên biệt (VD: Node A chuyên phân tích, Node B chuyên viết).
+- **Kết nối:** Băng chuyền để chuyển tài liệu từ người này sang người khác.
+- **Biến** **`\{\{...\}\}`****:** Đây là khái niệm quan trọng nhất. Khi Nhân viên B muốn làm việc, họ phải lấy kết quả của A để xử lý tiếp.
+> 🔑 Quy tắc vàng: Để lấy dữ liệu từ Node trước, nhấn phím \{ (dấu ngoặc nhọn) trong ô nhập liệu để mở danh sách biến.
+
+---
+
+
+## Thực hành từng bước
+
+
+Khi bạn tạo Chat Flow mới, màn hình Canvas sẽ hiển thị 2 khối cơ bản: **Start** và **Answer** được nối với nhau.
+
+
+### Bước 1: Cấu hình Node "Start" (Đầu vào)
+
+
+Node này đã có sẵn, chỉ cần click vào để chỉnh sửa.
+
+1. Click vào node **Start**.
+2. Đảm bảo bảng cấu hình có trường `sys.query`. Đây là nơi nhận tin nhắn chat của khách hàng.
+
+![image.png](/images/chatflow/chatflow-59c3df68.png)
+
+
+### Bước 2: Thêm Node "Phân tích BA"
+
+
+_Nhiệm vụ: Đọc_ _`sys.query`_ _để phân tích._
+
+1. Thêm node **LLM** sau Start, đổi tên thành `BA_Analysis`.
+2. Trong phần "Context", chọn: `sys.query`
+3. **Cấu hình SYSTEM (Vai trò):**
+    > "Bạn là Business Analyst (BA) cao cấp với 10 năm kinh nghiệm.  
+    > Nhiệm vụ: Từ ý tưởng thô của khách hàng, phân tích thành danh sách Yêu cầu Chức năng chi tiết.  
+    > Phân chia rõ: App người dùng, Web quản trị (CMS/Admin), và Backend.  
+    > Đầu ra: Chỉ liệt kê tính năng dạng bullet points, ngắn gọn."
+4. **Cấu hình USER (Tạo ngữ cảnh với Biến):**
+    - Gõ prompt: `Phân tích yêu cầu khách hàng sau:`
+    - **Chèn biến:** Nhấn phím `\{`, chọn **sys.query**.
+    - _Hiển thị đúng:_ `Phân tích yêu cầu khách hàng sau: \{\{Start.sys_query\}\}`
+
+![image.png](/images/chatflow/chatflow-7f26e032.png)
+
+
+---
+
+
+### Bước 3: Thêm Node "Kiến trúc sư Công nghệ"
+
+
+_Nhiệm vụ: Đọc kết quả phân tích của BA để chọn công nghệ._
+
+1. Thêm node **LLM** sau BA, kết nối với BA, đổi tên thành `Tech_Stack`.
+2. **Cấu hình Context:** Chọn `\{\{BA_Analysis.text\}\}`
+3. **Cấu hình SYSTEM:**
+    > "Bạn là Solution Architect. Đề xuất Tech Stack tối ưu nhất cho dự án này.  
+    > Ưu tiên Stack hiện đại:
+>     - Mobile: Flutter (Cross-platform).
+>     - Backend: Node.js (NestJS) hoặc Supabase.
+>     - Database: PostgreSQL.
+>     Giải thích ngắn gọn lý do lựa chọn."
+>
+4. **Cấu hình USER (Tạo ngữ cảnh với Biến):**
+    - Gõ: `Dựa trên phân tích chức năng sau:`
+    - **Chèn biến:** Nhấn phím `\{`, chọn `\{\{BA_Analysis.text\}\}`
+    - _Hiển thị đúng:_ `Dựa trên phân tích chức năng sau: \{\{BA_Analysis.text\}\}`
+
+![image.png](/images/chatflow/chatflow-9633cbcd.png)
+
+
+---
+
+
+### Bước 4: Thêm Node "Viết Báo giá" (Quan trọng)
+
+
+_Nhiệm vụ: Đọc TẤT CẢ biến trước đó để biên soạn thành tài liệu._
+
+1. Thêm node **LLM** sau Tech_Stack, đổi tên thành `Write_Quote`.
+2. Trong phần "Context", chọn: **Tech_Stack** / **text**
+3. **Cấu hình SYSTEM:**
+    > Bạn là Giám đốc Kinh doanh. Nhiệm vụ của bạn là viết Technical Proposal chuyên nghiệp, thuyết phục để gửi cho khách hàng ngay.  
+    > Format: Markdown đẹp.  
+    > Cấu trúc bắt buộc:
+>     1. Tổng quan dự án (Hiểu pain point của khách).
+>     2. Phạm vi công việc (từ BA).
+>     3. Giải pháp kỹ thuật (Tech Stack - từ Architect).
+>     4. Lộ trình triển khai (Timeline ước tính theo tuần).
+>     5. Dự toán ngân sách (Khoảng giá tham khảo bằng USD).
+>     Tone: Chuyên nghiệp, đáng tin cậy, khuyến khích chốt deal.
+>
+4. **Cấu hình USER (Kết hợp 3 biến vào ngữ cảnh):**
+Bạn cần chèn 3 biến tuần tự để AI có đầy đủ thông tin. Nhập chính xác như dưới:
+    - Gõ: `1. Yêu cầu khách hàng:` Nhấn `\{`, chọn **Start** / **sys.query**
+    - Gõ: `2. Chi tiết tính năng:` Nhấn `\{`, chọn **BA_Analysis** / **text**
+    - Gõ: `3. Công nghệ đề xuất:` Nhấn `\{`, chọn **Tech_Stack** / **text**
+
+    Giao diện sẽ hiển thị như:
+
+
+```plain text
+1. Yêu cầu khách hàng: \{\{Start.sys_query\}\}
+2. Chi tiết tính năng: \{\{BA_Analysis.text\}\}
+3. Công nghệ đề xuất: \{\{Tech_Stack.text\}\}
+```
+
+
+![image.png](/images/chatflow/chatflow-0a870e75.png)
+
+
+### Bước 5: Node "Answer" (Trả kết quả)
+
+
+_Nhiệm vụ: Lấy biến cuối cùng và hiển thị trên màn hình._
+
+1. Click vào node **Answer** ở cuối.
+2. Trong trường **Response**, xóa hết nội dung cũ.
+3. **Chèn biến:** Nhấn phím `\{`, chọn **Write_Quote** / **text**.
+    - _Hiển thị đúng:_ `\{\{Write_Quote.text\}\}`
+
+---
+
+
+## Xử lý lỗi thường gặp
+
+
+Trong quá trình thực hiện, 99% người mới sẽ gặp lỗi chữ đỏ: **"Please fill in context variable in PROMPT"**.
+
+> ⚠️ Nguyên nhân: Bạn sử dụng biến \{\{Start.query\}\} trong prompt, NHƯNG chưa khai báo nó trong phần Context của Node đó.
+
+**Cách sửa:**
+
+1. Nhìn bên dưới trường **System** của Node bị lỗi.
+2. Tìm phần **Context**.
+3. Click **Add**.
+4. Chọn đúng biến bạn đang sử dụng trong Prompt.
+5. Lỗi đỏ sẽ biến mất.
+
+---
+
+
+## Kết quả
+
+
+Bây giờ click nút **Debug and Preview** ở góc trên bên phải.
+
+1. **Nhập test:** _"Tôi muốn làm app đặt lịch khám bệnh."_
+2. **Kết quả:** Bạn sẽ thấy các Node sáng lên tuần tự:
+    - **BA** phân tích yêu cầu.
+    - **Tech** chọn tech stack.
+    - **Sales** viết báo giá.
+    - **Cuối cùng:** Trả về báo giá chuyên nghiệp đầy đủ.
+
+![image.png](/images/chatflow/chatflow-fd3494e9.png)
