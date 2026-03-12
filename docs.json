@@ -96,15 +96,7 @@
         ]
       }
     ],
-    "global": {
-      "anchors": [
-        {
-          "anchor": "Tài liệu",
-          "href": "/",
-          "icon": "book-open-cover"
-        }
-      ]
-    },
+    "global": {},
     "languages": [
       {
         "language": "vi",
@@ -281,16 +273,6 @@
     "dark": "/logo/aihive-logo-dark.svg"
   },
   "navbar": {
-    "links": [
-      {
-        "label": "FAQs",
-        "href": "/faq/faq"
-      },
-      {
-        "label": "Changelog",
-        "href": "/changelog"
-      }
-    ],
     "primary": {
       "type": "button",
       "label": "Try AI Hive ↗",

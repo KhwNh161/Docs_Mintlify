@@ -40,3 +40,17 @@ div[class*="powered"],
 footer a[href*="mintlify"] {
   display: none !important;
 }
+
+/* Move language switcher to the right */
+#localization-select-trigger {
+  order: 10 !important;
+  margin-left: auto !important;
+}
+
+/* Keep theme switcher on the right side */
+button[aria-label*="k mode"],
+button[aria-label*="độ tối"],
+button[aria-label*="theme"] {
+  order: 11 !important;
+  margin-left: 8px !important;
+}
