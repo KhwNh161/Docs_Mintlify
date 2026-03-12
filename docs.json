@@ -6,9 +6,9 @@
     "default": "dark"
   },
   "colors": {
-    "primary": "#7C5CFC",
-    "light": "#A78BFA",
-    "dark": "#5B3FD4"
+    "primary": "#CA3733",
+    "light": "#E25C58",
+    "dark": "#9F2B28"
   },
   "favicon": "/aihive-favicon.svg",
   "search": {
