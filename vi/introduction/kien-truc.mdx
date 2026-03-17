@@ -1,0 +1,36 @@
+---
+title: "Kiến trúc "
+sidebarTitle: "Kiến trúc "
+description: "Kiến trúc  - AI Hive Documentation"
+---
+
+# Kiến trúc hoạt động
+
+
+Hệ thống AIHive được thiết kế theo mô hình 3 lớp, đảm bảo tính ổn định, bảo mật và khả năng mở rộng linh hoạt cho doanh nghiệp.
+
+
+## Lớp Giao tiếp (Communication Layer)
+
+
+Đây là "cửa ngõ" tiếp nhận thông tin từ khách hàng. AIHive hỗ trợ kết nối đa chiều thông qua API và Webhooks:
+
+- **Input:** Nhận tin nhắn văn bản, hình ảnh, file âm thanh từ các nền tảng (Facebook, Zalo, Web Widget...).
+- **Output:** Phản hồi lại khách hàng theo đúng định dạng của nền tảng đó (Text, Thẻ sản phẩm, Nút bấm).
+
+## Lớp Trí tuệ (Intelligence Layer)
+
+
+Đây là "bộ não" trung tâm xử lý dữ liệu:
+
+- **LLM Core:** Sử dụng các mô hình ngôn ngữ lớn (như GPT, Claude, Gemini) để hiểu ý định (Intent) và cảm xúc của khách hàng.
+- **Knowledge Base (RAG):** Hệ thống tìm kiếm dữ liệu doanh nghiệp (Chính sách, Tài liệu sản phẩm) để cung cấp ngữ cảnh cho AI, giúp câu trả lời chính xác và không bị "ảo giác" (Hallucination).
+- **Vision Engine:** Module chuyên biệt để xử lý và phân tích hình ảnh sản phẩm khách gửi.
+
+## Lớp Tích hợp (Integration Layer)
+
+
+Đây là "cánh tay" thực thi hành động:
+
+- **CRM/POS Connectors:** Cổng kết nối với các phần mềm bán hàng (Mipos,KiotViet, Haravan, [Nhanh.vn](http://nhanh.vn/)...) để đọc/ghi dữ liệu đơn hàng và tồn kho.
+- **ERP Connectors:** Kết nối với các hệ thống quản trị lớn (Odoo, Salesforce, Oracle) cho các doanh nghiệp quy mô lớn.

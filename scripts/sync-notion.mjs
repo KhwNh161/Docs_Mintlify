@@ -27,8 +27,12 @@ const ROOT_DIR = path.resolve(__dirname, "..");
 // Lấy các biến cấu hình từ file .env
 const NOTION_TOKEN = process.env.NOTION_TOKEN; // Token kết nối API của Notion
 const DATABASE_ID = process.env.NOTION_DATABASE_ID; // ID của database tài liệu trên Notion
-const DEFAULT_LANG = process.env.DEFAULT_LANG || "vi"; // Ngôn ngữ gốc (Lưu tại thư mục gốc của dự án)
+const DEFAULT_LANG = "en"; // Ngôn ngữ gốc cố định: root '/' luôn là English
 const SUPPORTED_LANGS = ["vi", "en"]; // Danh sách các ngôn ngữ hệ thống hỗ trợ đồng bộ
+const ORDERED_LANGS = [
+    DEFAULT_LANG,
+    ...SUPPORTED_LANGS.filter((lang) => lang !== DEFAULT_LANG),
+];
 
 if (!NOTION_TOKEN || !DATABASE_ID) {
     console.error("❌ Missing NOTION_TOKEN or NOTION_DATABASE_ID in .env");
@@ -83,6 +87,19 @@ const CATEGORY_ORDER = [
     "faq",
 ];
 
+/** Normalize notion-to-md output shape into plain markdown text */
+function extractMarkdownContent(mdOutput, key = "parent") {
+    if (typeof mdOutput === "string") return mdOutput;
+    if (!mdOutput || typeof mdOutput !== "object") return "";
+
+    if (typeof mdOutput[key] === "string") return mdOutput[key];
+
+    for (const value of Object.values(mdOutput)) {
+        if (typeof value === "string" && value.trim()) return value;
+    }
+    return "";
+}
+
 // ─── Helpers ──────────────────────────────────────────────
 
 /** Get plain text from a Notion rich_text array */
@@ -110,6 +127,13 @@ function getTitle(prop) {
 function ensureDir(dirPath) {
     if (!fs.existsSync(dirPath)) {
         fs.mkdirSync(dirPath, { recursive: true });
+    }
+}
+
+/** Remove directory recursively if it exists */
+function removeDirIfExists(dirPath) {
+    if (fs.existsSync(dirPath)) {
+        fs.rmSync(dirPath, { recursive: true, force: true });
     }
 }
 
@@ -228,7 +252,7 @@ async function queryDatabase() {
             filter: {
                 and: [
                     {
-                        or: SUPPORTED_LANGS.map((lang) => ({
+                        or: ORDERED_LANGS.map((lang) => ({
                             property: "Lang",
                             select: { equals: lang },
                         })),
@@ -284,14 +308,29 @@ async function convertPageToMdx(page) {
     try {
         // Convert Notion blocks to markdown
         const mdBlocks = await n2m.pageToMarkdown(page.id);
-        const mdString = n2m.toMarkdownString(mdBlocks);
-
-        // Handle different return formats from notion-to-md
         let content = "";
-        if (typeof mdString === "string") {
-            content = mdString;
-        } else if (mdString && typeof mdString === "object") {
-            content = mdString.parent || "";
+
+        // Convert all blocks at once (fast path)
+        try {
+            const mdString = n2m.toMarkdownString(mdBlocks);
+            content = extractMarkdownContent(mdString);
+        } catch (bulkErr) {
+            // Fallback: convert each block independently to skip malformed blocks
+            console.warn(`    ⚠️  Falling back to safe block-by-block conversion: ${bulkErr.message}`);
+            const chunks = [];
+
+            for (const block of mdBlocks) {
+                try {
+                    const chunk = n2m.toMarkdownString([block]);
+                    const parsed = extractMarkdownContent(chunk);
+                    if (parsed) chunks.push(parsed);
+                } catch (blockErr) {
+                    const blockType = block?.type || "unknown";
+                    console.warn(`    ⚠️  Skipping malformed block (${blockType}): ${blockErr.message}`);
+                }
+            }
+
+            content = chunks.join("\n\n");
         }
 
         // Escape curly braces for MDX compatibility (JSX expressions)
@@ -336,8 +375,8 @@ async function convertPageToMdx(page) {
 
 /**
  * BƯỚC 3: Ghi các nội dung MDX đã xử lý xong xuống thành file lưu ở thư mục hệ thống.
- * - Bài viết thuộc DEFAULT_LANG (vi): Sẽ được lưu ở thư mục gốc (Ví dụ: /features/tinh-nang.mdx)
- * - Bài viết khác (en): Được lưu vào folder tiền tố ngỗn ngữ (Ví dụ: /en/features/tinh-nang.mdx)
+ * - Bài viết thuộc DEFAULT_LANG (en): Sẽ được lưu ở thư mục gốc (Ví dụ: /features/tinh-nang.mdx)
+ * - Bài viết khác (vi): Được lưu vào folder tiền tố ngôn ngữ (Ví dụ: /vi/features/tinh-nang.mdx)
  */
 function writePages(pages, lang) {
     const isDefault = lang === DEFAULT_LANG;
@@ -353,6 +392,77 @@ function writePages(pages, lang) {
         fs.writeFileSync(filePath, page.content, "utf-8");
         console.log(`  ✅ ${prefix}${page.categorySlug}/${page.slug}.mdx`);
     }
+}
+
+/**
+ * Clean legacy prefixed files for the default language.
+ * Example: when DEFAULT_LANG=en, remove stale /en/** docs from old structure.
+ */
+function cleanupLegacyDefaultPrefix() {
+    const prefixedRoot = path.join(ROOT_DIR, DEFAULT_LANG);
+    if (!fs.existsSync(prefixedRoot)) return;
+
+    // Only remove known generated category folders + index.mdx, keep unrelated files safe.
+    for (const categorySlug of CATEGORY_ORDER) {
+        removeDirIfExists(path.join(prefixedRoot, categorySlug));
+    }
+
+    const prefixedIndex = path.join(prefixedRoot, "index.mdx");
+    if (fs.existsSync(prefixedIndex)) fs.rmSync(prefixedIndex, { force: true });
+
+    // Remove now-empty default prefix dir.
+    try {
+        const remaining = fs.readdirSync(prefixedRoot);
+        if (remaining.length === 0) fs.rmdirSync(prefixedRoot);
+    } catch {
+        // Best-effort cleanup, safe to ignore.
+    }
+}
+
+/** Remove images that are no longer referenced in any MDX file */
+function cleanupUnusedImages() {
+    const imagesRoot = path.join(ROOT_DIR, "images");
+    if (!fs.existsSync(imagesRoot)) return { total: 0, removed: 0 };
+
+    const mdxFiles = [];
+    const imageFiles = [];
+
+    function walk(dirPath) {
+        for (const entry of fs.readdirSync(dirPath, { withFileTypes: true })) {
+            const fullPath = path.join(dirPath, entry.name);
+            if (entry.isDirectory()) {
+                if (["node_modules", ".git", ".mintlify"].includes(entry.name)) continue;
+                walk(fullPath);
+                continue;
+            }
+            if (fullPath.endsWith(".mdx")) mdxFiles.push(fullPath);
+            if (fullPath.includes(`${path.sep}images${path.sep}`)) imageFiles.push(fullPath);
+        }
+    }
+
+    walk(ROOT_DIR);
+
+    const referenced = new Set();
+    const imageRefRegex = /\]\((\/images\/[^)]+)\)/g;
+
+    for (const mdxPath of mdxFiles) {
+        const content = fs.readFileSync(mdxPath, "utf-8");
+        const matches = [...content.matchAll(imageRefRegex)];
+        for (const match of matches) {
+            referenced.add(match[1].replace(/\\/g, "/"));
+        }
+    }
+
+    let removed = 0;
+    for (const imagePath of imageFiles) {
+        const relPath = imagePath.substring(ROOT_DIR.length).replace(/\\/g, "/");
+        if (!referenced.has(relPath)) {
+            fs.rmSync(imagePath, { force: true });
+            removed += 1;
+        }
+    }
+
+    return { total: imageFiles.length, removed };
 }
 
 /**
@@ -446,7 +556,7 @@ function updateDocsJson(pagesByLang) {
 
     // Build ALL languages into the languages array (so switcher shows all)
     const languages = [];
-    for (const lang of SUPPORTED_LANGS) {
+    for (const lang of ORDERED_LANGS) {
         const langPages = pagesByLang[lang];
         if (!langPages || langPages.length === 0) continue;
 
@@ -463,6 +573,7 @@ function updateDocsJson(pagesByLang) {
 
         languages.push({
             language: lang,
+            default: lang === DEFAULT_LANG,
             tabs: [
                 {
                     tab: tabNames[lang] || "Docs",
@@ -476,6 +587,12 @@ function updateDocsJson(pagesByLang) {
     if (languages.length > 0) {
         docsJson.navigation.languages = languages;
     }
+
+    // Avoid duplicate language switchers in Mintlify UI.
+    if (docsJson.navigation?.global?.languages) {
+        delete docsJson.navigation.global.languages;
+    }
+
     // Remove any stale root-level languages key
     delete docsJson.languages;
 
@@ -526,8 +643,17 @@ async function main() {
             writePages(pagesByLang[lang], lang);
         }
 
+        // Cleanup stale generated artifacts from previous language-structure modes
+        cleanupLegacyDefaultPrefix();
+
         // 5. Update docs.json navigation (multi-language)
         updateDocsJson(pagesByLang);
+
+        // 6. Remove stale images not referenced by current MDX content
+        const imageCleanup = cleanupUnusedImages();
+        if (imageCleanup.removed > 0) {
+            console.log(`🧹 Removed ${imageCleanup.removed} unused images (from ${imageCleanup.total} total).`);
+        }
 
         // Summary
         console.log("\n════════════════════════════════════");

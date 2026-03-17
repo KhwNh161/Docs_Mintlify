@@ -22,93 +22,81 @@
           {
             "group": "Introduction",
             "pages": [
-              "en/index",
-              "en/introduction/tong-quan",
-              "en/introduction/kien-truc",
-              "en/introduction/thuat-ngu"
+              "index",
+              "introduction/tong-quan",
+              "introduction/kien-truc",
+              "introduction/thuat-ngu"
             ]
           },
           {
             "group": "Getting Started",
             "pages": [
-              "en/getting-started/dang-ky",
-              "en/getting-started/giao-dien"
+              "getting-started/dang-ky",
+              "getting-started/giao-dien"
             ]
           },
           {
             "group": "Agent Setup",
             "pages": [
-              "en/agents/tao_agent_basic",
-              "en/agents/agent_nangcao"
+              "agents/tao_agent_basic",
+              "agents/agent_nangcao"
             ]
           },
           {
             "group": "Knowledge Base",
             "pages": [
-              "en/knowledge/them-kienthuc"
+              "knowledge/them-kienthuc"
             ]
           },
           {
             "group": "Tools",
             "pages": [
-              "en/tools/mipos_search",
-              "en/tools/mipos_order"
+              "tools/mipos_search",
+              "tools/mipos_order"
             ]
           },
           {
             "group": "Work Flow",
             "pages": [
-              "en/workflow/work-flow"
+              "workflow/work-flow"
             ]
           },
           {
             "group": "Chat Flow",
             "pages": [
-              "en/chatflow/chat-flow"
+              "chatflow/chat-flow"
             ]
           },
           {
             "group": "Advanced Features",
             "pages": [
-              "en/features/ql-workspace",
-              "en/features/bao-cao-tong-quan",
-              "en/features/lich-su-hoi-thoai"
+              "features/ql-workspace",
+              "features/bao-cao-tong-quan",
+              "features/lich-su-hoi-thoai"
             ]
           },
           {
             "group": "Channels",
             "pages": [
-              "en/channels/tich-hop-messenger"
+              "channels/tich-hop-messenger"
             ]
           },
           {
             "group": "Developers",
             "pages": [
-              "en/developers/developers"
+              "developers/developers"
             ]
           },
           {
             "group": "FAQ",
             "pages": [
-              "en/faq/faq"
+              "faq/faq"
             ]
           }
         ]
       }
     ],
-    "global": {
-      "languages": [
-        {
-          "language": "en",
-          "href": "/en/index",
-          "default": true
-        },
-        {
-          "language": "vi",
-          "href": "/vi/index"
-        }
-      ]
-    },
+    "global": {},
     "languages": [
       {
         "language": "en",
@@ -120,112 +108,28 @@
               {
                 "group": "Introduction",
                 "pages": [
-                  "en/index",
-                  "en/introduction/tong-quan",
-                  "en/introduction/kien-truc",
-                  "en/introduction/thuat-ngu"
-                ]
-              },
-              {
-                "group": "Getting Started",
-                "pages": [
-                  "en/getting-started/dang-ky",
-                  "en/getting-started/giao-dien"
-                ]
-              },
-              {
-                "group": "Agent Setup",
-                "pages": [
-                  "en/agents/tao_agent_basic",
-                  "en/agents/agent_nangcao"
-                ]
-              },
-              {
-                "group": "Knowledge Base",
-                "pages": [
-                  "en/knowledge/them-kienthuc"
-                ]
-              },
-              {
-                "group": "Tools",
-                "pages": [
-                  "en/tools/mipos_search",
-                  "en/tools/mipos_order"
-                ]
-              },
-              {
-                "group": "Work Flow",
-                "pages": [
-                  "en/workflow/work-flow"
-                ]
-              },
-              {
-                "group": "Chat Flow",
-                "pages": [
-                  "en/chatflow/chat-flow"
-                ]
-              },
-              {
-                "group": "Advanced Features",
-                "pages": [
-                  "en/features/ql-workspace",
-                  "en/features/bao-cao-tong-quan",
-                  "en/features/lich-su-hoi-thoai"
-                ]
-              },
-              {
-                "group": "Channels",
-                "pages": [
-                  "en/channels/tich-hop-messenger"
-                ]
-              },
-              {
-                "group": "Developers",
-                "pages": [
-                  "en/developers/developers"
-                ]
-              },
-              {
-                "group": "FAQ",
-                "pages": [
-                  "en/faq/faq"
-                ]
-              }
-            ]
-          }
-        ]
-      },
-      {
-        "language": "vi",
-        "tabs": [
-          {
-            "tab": "Hướng dẫn",
-            "groups": [
-              {
-                "group": "Giới thiệu",
-                "pages": [
-                  "vi/index",
+                  "index",
                   "introduction/tong-quan",
                   "introduction/kien-truc",
                   "introduction/thuat-ngu"
                 ]
               },
               {
-                "group": "Bắt đầu",
+                "group": "Getting Started",
                 "pages": [
                   "getting-started/dang-ky",
                   "getting-started/giao-dien"
                 ]
               },
               {
-                "group": "Tạo và cấu hình Agent",
+                "group": "Agent Setup",
                 "pages": [
                   "agents/tao_agent_basic",
                   "agents/agent_nangcao"
                 ]
               },
               {
-                "group": "Kiến thức",
+                "group": "Knowledge Base",
                 "pages": [
                   "knowledge/them-kienthuc"
                 ]
@@ -250,7 +154,7 @@
                 ]
               },
               {
-                "group": "Tính năng mở rộng",
+                "group": "Advanced Features",
                 "pages": [
                   "features/ql-workspace",
                   "features/bao-cao-tong-quan",
@@ -258,7 +162,7 @@
                 ]
               },
               {
-                "group": "Kết nối đa kênh",
+                "group": "Channels",
                 "pages": [
                   "channels/tich-hop-messenger"
                 ]
@@ -273,6 +177,91 @@
                 "group": "FAQ",
                 "pages": [
                   "faq/faq"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "language": "vi",
+        "default": false,
+        "tabs": [
+          {
+            "tab": "Hướng dẫn",
+            "groups": [
+              {
+                "group": "Giới thiệu",
+                "pages": [
+                  "vi/index",
+                  "vi/introduction/tong-quan",
+                  "vi/introduction/kien-truc",
+                  "vi/introduction/thuat-ngu"
+                ]
+              },
+              {
+                "group": "Bắt đầu",
+                "pages": [
+                  "vi/getting-started/dang-ky",
+                  "vi/getting-started/giao-dien"
+                ]
+              },
+              {
+                "group": "Tạo và cấu hình Agent",
+                "pages": [
+                  "vi/agents/tao_agent_basic",
+                  "vi/agents/agent_nangcao"
+                ]
+              },
+              {
+                "group": "Kiến thức",
+                "pages": [
+                  "vi/knowledge/them-kienthuc"
+                ]
+              },
+              {
+                "group": "Tools",
+                "pages": [
+                  "vi/tools/mipos_search",
+                  "vi/tools/mipos_order"
+                ]
+              },
+              {
+                "group": "Work Flow",
+                "pages": [
+                  "vi/workflow/work-flow"
+                ]
+              },
+              {
+                "group": "Chat Flow",
+                "pages": [
+                  "vi/chatflow/chat-flow"
+                ]
+              },
+              {
+                "group": "Tính năng mở rộng",
+                "pages": [
+                  "vi/features/ql-workspace",
+                  "vi/features/bao-cao-tong-quan",
+                  "vi/features/lich-su-hoi-thoai"
+                ]
+              },
+              {
+                "group": "Kết nối đa kênh",
+                "pages": [
+                  "vi/channels/tich-hop-messenger"
+                ]
+              },
+              {
+                "group": "Developers",
+                "pages": [
+                  "vi/developers/developers"
+                ]
+              },
+              {
+                "group": "FAQ",
+                "pages": [
+                  "vi/faq/faq"
                 ]
               }
             ]

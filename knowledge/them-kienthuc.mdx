@@ -1,223 +1,226 @@
 ---
-title: "Hướng dẫn thêm kiến thức"
-sidebarTitle: "Hướng dẫn thêm kiến thức"
-description: "Hướng dẫn thêm kiến thức - AI Hive Documentation"
+title: "Knowledge Management Guide"
+sidebarTitle: "Knowledge Management Guide"
+description: "Knowledge Management Guide - AI Hive Documentation"
 ---
 
-# Hướng dẫn Quản lý Kiến thức (Knowledge Base) & Tinh chỉnh chuyên sâu
+# Knowledge Base Management & Advanced Fine-tuning Guide
 
 
-Tài liệu này hướng dẫn chi tiết quy trình nạp dữ liệu riêng vào hệ thống, đồng thời giải thích cặn kẽ ý nghĩa các tham số kỹ thuật để tối ưu hóa khả năng trả lời của Agent.
-
-
----
-
-
-## Khởi tạo và Nạp dữ liệu (Import Data)
-
-
-Bước đầu tiên là tạo một không gian lưu trữ tài liệu để Agent có thể truy cập.
-
-
-Người dùng chọn “Kiến thức” trong màn kiến thức chọn “Tạo kiến thức”
-
-
-### Bước 1: Tạo bộ Kiến thức mới
-
-1. Tại thanh menu bên trái, tìm và chọn mục **Kiến thức (Knowledge)**.
-2. Nhấn nút **+ Tạo Kiến thức (Create Knowledge).**
-
-### Bước 2: Tạo bộ Kiến thức mới
-
-1. Ấn vào “**Tôi muốn tạo Kiến thức trống”.**
-2. Nhập tên **+ Tạo .**
-
-![7490239b-2c9e-4ac3-bbe8-aa3bb90b58d3.png](/images/knowledge/knowledge-4ebb8281.png)
-
-
-### Bước 3: Tải dữ liệu lên
-
-1. Ấn vào “**Thêm tệp”.**
-
-![e6ec87f0-3789-4bee-8644-b8e6e9aa5867.png](/images/knowledge/knowledge-0262647b.png)
-
-1. Thêm tệp của bạn rồi ấn “**Tiếp theo”.**
-
-![a253129c-6a85-4e23-8770-e993fe936f1d.png](/images/knowledge/knowledge-dcbfd498.png)
-
-
-Hệ thống hỗ trợ 3 cách nạp dữ liệu. Hãy chọn cách phù hợp với nguồn tài liệu của bạn:
-
-- **Tệp văn bản (Local File) -** _**Khuyên dùng**_**:** Tải lên các file PDF, DOCX, TXT.
-    - _Lưu ý:_ Nên làm sạch file (xoá header/footer thừa) trước khi up để Agent đọc tốt nhất.
-- **Đồng bộ từ Website (Sync from Website):** Nhập link website để hệ thống tự quét nội dung.
-    - _Lưu ý:_ Chỉ quét được web tĩnh, không quét được web cần đăng nhập/xác thực.
-- **Đồng bộ từ Notion**
-
- ⚠️ **LƯU Ý: Sau khi upload file, tại màn hình xử lý hãy chọn chế độ "Tự động". Hệ thống sẽ tự động thiết lập quy tắc phân đoạn và tiền xử lý. Người dùng không quen thuộc được khuyến nghị chọn tùy chọn này.**
+This document provides detailed instructions on importing your own data into the system, while thoroughly explaining the technical parameters to optimize Agent response capabilities.
 
 
 ---
 
 
-## Tinh chỉnh Tham số Xử lý (Nếu cần)
+## Data Import Setup
 
 
-**Đây là bước QUAN TRỌNG.**
-Dữ liệu thô cần được cắt nhỏ (Chunking) để lưu vào cơ sở dữ liệu. Nếu cắt sai, Agent sẽ trả lời sai hoặc không hiểu ngữ cảnh.
+The first step is to create a document storage space for the Agent to access.
 
 
-Chọn chế độ Tùy chỉnh (Custom) để can thiệp vào các thông số sau:
+Users select "Knowledge" in the knowledge screen, then select "Create Knowledge".
 
 
-### Chunk Size (Độ dài tối đa của đoạn)
+### Step 1: Create a New Knowledge Base
 
-- **Định nghĩa:** Độ dài tối đa (tính bằng tokens) của một đoạn văn bản mà hệ thống sẽ cắt ra.
-- **Giá trị khuyên dùng:** `500` đến `800` tokens.
+1. In the left menu bar, find and select **Knowledge**.
+2. Click the **+ Create Knowledge** button.
 
-💡 Tại sao cần chỉnh số này?
+### Step 2: Initialize Knowledge Base
 
-- **Nếu quá ngắn (< 200):** Các câu sẽ bị tách rời khỏi ngữ cảnh.
-    - _Ví dụ:_ Câu hỏi ở đoạn 1 nhưng câu trả lời lại bị cắt sang đoạn 2 -> Agent không hiểu.
-- **Nếu quá dài (> 2000):** Agent sẽ lấy cả một đoạn dài chứa nhiều thông tin nhiễu, làm giảm độ chính xác của câu trả lời .
+1. Click **"I want to create empty Knowledge"**.
+2. Enter a name and click **Create**.
 
-![image.png](/images/knowledge/knowledge-2340f801.png)
-
-
-### Chunk Overlap (Chồng lấn đoạn)
-
-- **Định nghĩa:** Số lượng tokens của đoạn trước được lặp lại ở đầu đoạn sau.
-- **Giá trị khuyên dùng:** `10%` đến `20%` của Chunk Size (khoảng `50` - `100` tokens).
-
-💡 Tại sao cần chồng lặp?
-Máy tính cắt đoạn một cách máy móc. Nếu điểm cắt rơi vào đúng giữa một câu quan trọng, ý nghĩa câu đó sẽ bị gãy.
-
-- _Ví dụ:_ Câu "Bảo hành 12 tháng đổi mới" bị cắt đôi.
-- _Giải pháp:_ Overlap giúp đoạn sau lặp lại một chút của đoạn trước, đảm bảo cụm từ "Bảo hành 12 tháng đổi mới" luôn xuất hiện trọn vẹn trong ít nhất 1 đoạn.
-
-![image.png](/images/knowledge/knowledge-151e4a8a.png)
+![image.png](/images/knowledge/knowledge-710c8daf.png)
 
 
-### Separator (Bộ phận xác định đoạn) - _Cấu hình nâng cao_
+### Step 3: Upload Data
 
-- **Định nghĩa:** Là ký tự hoặc dấu hiệu để hệ thống nhận biết "khi nào thì hết một ý" để cắt xuống dòng (ngắt đoạn).
-- **Mặc định:** `\\n\\n` (Hai dấu xuống dòng liên tiếp - Tương đương với việc nhấn phím Enter 2 lần).
+1. Click **"Add files"**.
 
-⚠️ **Tại sao phải chỉnh cái này?**
-Nếu chọn sai Separator, Agent sẽ cắt tài liệu sai chỗ, làm gãy ngữ cảnh.
+![image.png](/images/knowledge/knowledge-44cbe1d1.png)
 
-- _Ví dụ:_ Cắt rời "Câu hỏi" và "Câu trả lời" ra 2 đoạn (chunk) khác nhau Agent đọc được câu trả lời nhưng không biết nó thuộc về câu hỏi nào →Trả lời sai hoặc không tìm thấy thông tin.
+1. Add your files then click **"Next"**.
 
-### 📋 Bảng hướng dẫn chọn Separator theo loại tài liệu
+![image.png](/images/knowledge/knowledge-3fb58096.png)
 
 
-Tùy vào định dạng file bạn tải lên, hãy tra cứu bảng dưới đây để điền Separator phù hợp:
+The system supports 3 ways to import data. Choose the method that suits your document source:
 
+- **Local File** - _Recommended_: Upload PDF, DOCX, TXT files.
+    - _Note:_ Clean your files (remove unnecessary headers/footers) before uploading for best Agent reading.
+- **Sync from Website:** Enter website URL for the system to automatically scan content.
+    - _Note:_ Only works with static websites, cannot scan sites requiring login/authentication.
+- **Sync from Notion**.
 
-| Trường hợp (Case)                                                                   | Dấu phân cách nên dùng                       | Giải thích & Ví dụ                                                                                                                                                                                         |
-| ----------------------------------------------------------------------------------- | -------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **CASE 1: Văn bản chuẩn**<br/>(Sách, Báo, Hợp đồng, Quy trình, PDF văn bản)          | **`\\n\\n`** (Mặc định)<br/>_(Hai dấu Enter)_ | **Lý do:** Các văn bản này thường chia thành từng đoạn văn (paragraph), giữa các đoạn có 1 dòng trắng.<br/>**Kết quả:** Hệ thống sẽ gom trọn vẹn 1 đoạn văn vào 1 chunk.                                    |
-| **CASE 2: Danh sách rời rạc**<br/>(File Excel xuất ra Text, List sản phẩm, Log chat) | **`\\n`**<br/>_(Một dấu Enter)_               | **Lý do:** Dữ liệu dạng này mỗi dòng là một ý độc lập (Ví dụ: Dòng 1 là Áo, Dòng 2 là Quần). Không có dòng trắng ở giữa.<br/>**Kết quả:** Hệ thống sẽ cắt ngay khi hết dòng.                                |
-| **CASE 3: Tài liệu Markdown**<br/>(Tài liệu kỹ thuật, HDSD có chia mục lục)          | **`###`** hoặc **`##`**                      | **Lý do:** Nếu tài liệu của bạn chia chương mục bằng các dấu thăng (`#`), hãy dùng chính dấu đó để cắt.<br/>**Kết quả:** Hệ thống sẽ cắt dữ liệu gọn gàng theo từng chương/mục lớn.                         |
-| **CASE 4: Hỏi - Đáp (Q&A)**<br/>(File câu hỏi thường gặp)                            | **`\\n\\n`**<br/>_(Khuyên dùng)_              | **Mẹo soạn thảo:** Hãy soạn file Q&A sao cho giữa các cặp câu hỏi có 2 dấu Enter (dòng trắng), còn giữa Hỏi và Đáp chỉ có 1 dấu Enter (viết liền). Như vậy Hỏi & Đáp sẽ luôn dính liền nhau trong 1 chunk. |
-
-
-💡 Mẹo cho người không chuyên:
-Nếu bạn không chắc chắn file của mình thuộc loại nào, hãy mở file đó lên bằng Notepad (trên Windows) hoặc TextEdit (trên Mac):
-
-
--Nếu thấy các đoạn văn cách nhau bằng một khoảng trắng rõ rệt: Dùng `\\n\\n`.
-
-
--Nếu thấy chữ viết dày đặc, cứ xuống dòng là hết câu: Dùng `\\n`.
-
-
-[embed]()
-
-
-![2bccbb07-1dfb-40ec-9e8b-da50ae57969d.png](/images/knowledge/knowledge-e21a3d59.png)
-
-
-**Kiểm tra lại (Quan trọng):**
-Sau khi điền Separator, hãy nhìn sang khung **Preview (Xem trước)** bên phải màn hình.
-
-- ✅ **Đạt:** Nếu thấy các khối màu (chunk) bao trọn vẹn được ý nghĩa của một đoạn văn/một ý.
-- ❌ **Chưa đạt:** Nếu thấy câu đang viết dở dang mà bị cắt sang khối màu khác  Cần chỉnh lại Separator hoặc tăng Chunk Size.
-
----
-
-
-Sau khi hoàn tất cấu hình, nhấn **Lưu & Xử lý** và chờ trạng thái file chuyển sang màu xanh (Hoàn thành).
+ ⚠️ **NOTE: After uploading the file, please select "Automatic" on the processing screen. The system will automatically establish chunking rules and pre-processing. Users unfamiliar with these settings are recommended to choose this option.npm** 
 
 
 ---
 
 
-## Tích hợp và Cấu hình Tìm kiếm (Retrieval Settings)
+## Processing Parameter Fine-tuning (If Needed)
 
 
-Sau khi dữ liệu đã "học" xong, bạn cần gắn nó vào Agent và dạy Agent cách tìm kiếm thông tin trong đó.
+**This is an IMPORTANT step.**
+Raw data needs to be chunked for storage in the database. If chunked incorrectly, the Agent will respond incorrectly or not understand context.
 
 
-### Bước 1: Gắn Knowledge vào Agent
-
-1. Vào menu **Studio**, chọn con Agent cần cấu hình.
-2. Tại tab **Thiết lập AI,** tìm mục **Dữ liệu đào tạo.**
-3. Nhấn **Thêm (Add)** và chọn bộ kiến thức vừa tạo.
-
-![37eed266-b835-4f07-9002-1b1bde01a8b5.png](/images/knowledge/knowledge-4cb7336f.png)
+### Select **Custom** mode to adjust the following parameters:
 
 
-### Bước 2: Tinh chỉnh tham số suy luận (Retrieval Setting)
+### 1. Chunk Size (Maximum Segment Length)
+
+- **Definition:** Maximum length (in tokens) of a text segment that the system will cut.
+- **Recommended value:** `500` to `800` tokens.
+
+💡 Why adjust this number?
+
+- **If too short (\<200):** Sentences will be separated from context.
+    - _Example:_ Question in chunk 1 but answer gets cut to chunk 2 -> Agent doesn't understand.
+- **If too long (\>2000):** Agent will retrieve a long segment containing noise information, reducing answer accuracy.
+
+![image.png](/images/knowledge/knowledge-fe6ac964.png)
 
 
-Bấm vào biểu tượng **Cài đặt ⚙️** bên cạnh bộ Knowledge (trong trang cấu hình Agent) để mở bảng tham số.
+### 2. Chunk Overlap
+
+- **Definition:** Number of tokens from the previous chunk repeated at the beginning of the next chunk.
+- **Recommended value:** `10%` to `20%` of Chunk Size (approximately `50` - `100` tokens).
+
+💡 Why overlap is needed?
+Computers cut segments mechanically. If the cut point falls in the middle of an important sentence, the meaning will break.
 
 
-![image.png](/images/knowledge/knowledge-1c693bc5.png)
+💡 Why overlap is needed?
+Computers cut segments mechanically. If the cut point falls in the middle of an important sentence, the meaning will break.
+
+- _Example:_ Sentence "12-month replacement warranty" gets cut in half.
+- _Solution:_ Overlap helps the next segment repeat a bit of the previous segment, ensuring the phrase "12-month replacement warranty" always appears complete in at least 1 segment.
+
+![image.png](/images/knowledge/knowledge-9c5a3560.png)
 
 
-### A. Top K (Số lượng đoạn tham khảo)
+### 3. Separator (Segment Delimiter) - _Advanced Configuration_
 
-- **Định nghĩa:** Khi người dùng hỏi, hệ thống sẽ tìm ra bao nhiêu đoạn văn bản liên quan nhất để gửi cho AI đọc.
-- **Giá trị mặc định:** `3`.
+- **Definition:** Character or marker for the system to recognize "when an idea ends" to break the line (segment break).
+- **Default:** `\\n\\n` (Two consecutive line breaks - Equivalent to pressing Enter twice).
 
-🔧 Cách chỉnh hợp lý:
+⚠️ Why adjust this?
+If you choose the wrong Separator, the Agent will cut the document in wrong places, breaking context.
 
-- **Giữ mức 3:** Nếu câu hỏi đơn giản, câu trả lời nằm gọn trong 1-2 đoạn văn (Ví dụ: Tra cứu giá, địa chỉ).
-- **Tăng lên 5-7:** Nếu câu hỏi phức tạp, cần tổng hợp thông tin từ nhiều mục khác nhau (Ví dụ: "So sánh chính sách bảo hành gói A và gói B").
-- _Lưu ý:_ Đừng tăng quá cao (> 10) vì sẽ làm Agent bị loạn thông tin và phản hồi chậm.
 
-### B. Score Threshold (Ngưỡng điểm)
+_Example:_ Separating "Question" and "Answer" into 2 different chunks. Agent reads the answer but doesn't know which question it belongs to → Wrong answer or information not found.
 
-- **Định nghĩa:** Điểm số (từ 0.0 đến 1.0) để lọc rác. Chỉ những đoạn văn bản có độ khớp trên mức điểm này mới được sử dụng.
-- **Giá trị khuyên dùng:** `0.6` đến `0.7`.
 
-🔧 Cách chỉnh hợp lý:
+### 📋 Separator Selection Guide by Document Type
 
-- **Tăng lên (0.75 - 0.8):** Nếu Agent hay trả lời sai, bịa đặt. Bạn muốn Agent "thà không trả lời còn hơn trả lời sai". Yêu cầu độ chính xác tuyệt đối.
-- **Giảm xuống (0.5 - 0.6):** Nếu Agent hay trả lời "Tôi không biết" dù tài liệu có thông tin (thường do khách dùng từ ngữ khác biệt với tài liệu). Giảm xuống giúp Agent "thoáng" hơn trong việc tìm kiếm.
 
-![afa909f4-4ad9-43e1-8547-f074d053519b.png](/images/knowledge/knowledge-61fbb687.png)
+Depending on the file format you upload, refer to the table below to enter the appropriate Separator:
+
+
+| Case                                                                                   | Separator to Use                         | Explanation & Example                                                                                                                                                                                         |
+| -------------------------------------------------------------------------------------- | ---------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **CASE 1: Standard text**<br/>(Books, News, Contracts, Procedures, Text PDFs)           | **`\\n\\n`** (Default)<br/>_(Two Enters)_ | **Reason:** These texts are usually divided into paragraphs, with blank lines between paragraphs.<br/>**Result:** System will group a complete paragraph into 1 chunk.                                         |
+| **CASE 2: Discrete lists**<br/>(Excel exported to Text, Product lists, Chat logs)       | **`\\n`**<br/>_(One Enter)_               | **Reason:** This type of data has each line as an independent idea (e.g., Line 1 is Shirt, Line 2 is Pants). No blank lines in between.<br/>**Result:** System will cut immediately at end of line.            |
+| **CASE 3: Markdown documents**<br/>(Technical docs, User guides with table of contents) | **`###`** or **`##`**                    | **Reason:** If your document uses hash marks (`#`) for chapters/sections, use those marks to cut.<br/>**Result:** System will cut data neatly by chapter/major section.                                        |
+| **CASE 4: Q&A**<br/>(FAQ files)                                                         | **`\\n\\n`**<br/>_(Recommended)_          | **Formatting tip:** Format Q&A file so there are 2 Enters between question pairs (blank line), but only 1 Enter between Question and Answer (continuous). This way Q&A will always stick together in 1 chunk. |
+
+
+💡 Tip for non-experts:
+If you're unsure what type your file is, open it with Notepad (Windows) or TextEdit (Mac):
+
+
+If paragraphs are clearly separated by white space: Use `\\n\\n`.
+
+
+If text is dense, each line break ends a sentence: Use `\\n`.
+
+
+![image.png](/images/knowledge/knowledge-40cdf1d2.png)
+
+
+**Review (Important):**
+After entering Separator, look at the **Preview** panel on the right side of the screen.
+
+- ✅ **Pass:** If colored blocks (chunks) fully capture the meaning of a paragraph/idea.
+- ❌ **Fail:** If a sentence is incomplete and cut to another colored block → Need to adjust Separator or increase Chunk Size.
+
+---
+
+
+After completing configuration, click **Save & Process** and wait for file status to turn green (Complete).
 
 
 ---
 
 
-**Sau khi hoàn tất cấu hình, nhấn Lưu** 
+## Integration and Retrieval Settings
 
 
-![3d3317f4-9736-40e9-be28-6aa2c29723be.png](/images/knowledge/knowledge-d9d0a75a.png)
+After data has "learned", you need to attach it to the Agent and teach the Agent how to search for information in it.
 
 
-## Kiểm tra thực tế (Testing)
+### Step 1: Attach Knowledge to Agent
+
+1. Go to **Studio** menu, select the Agent to configure.
+2. In the **AI Settings** tab, find **Training Data** section.
+3. Click **Add** and select the knowledge base you just created.
+
+![image.png](/images/knowledge/knowledge-44eb20c1.png)
 
 
-Không bao giờ được bỏ qua bước này trước khi xuất bản .
+### Step 2: Fine-tune Retrieval Settings
 
-1. Ở cửa sổ **Preview (Xem trước)** bên trái màn hình.
-2. Đặt một câu hỏi test liên quan đến tài liệu vừa nạp.
-3. Quan sát câu trả lời
 
-![c34f8df3-9b26-4e3f-8582-cb9cf9446c8a.png](/images/knowledge/knowledge-54e5277e.png)
+Click the **Settings ⚙️** icon next to the Knowledge (in Agent configuration page) to open the parameters panel.
+
+
+![image.png](/images/knowledge/knowledge-f392ca95.png)
+
+
+### A. Top K (Number of Reference Segments)
+
+- **Definition:** When a user asks, how many most relevant text segments the system will find to send to AI for reading.
+- **Default value:** `3`.
+
+🔧 How to adjust appropriately:
+
+- **Keep at 3:** If questions are simple, answers fit in 1-2 paragraphs (e.g., Price lookup, address).
+- **Increase to 5-7:** If questions are complex, requiring information synthesis from multiple sections (e.g., "Compare warranty policies of Package A and Package B").
+- _Note:_ Don't increase too high (\>10) as it will confuse the Agent and slow down responses.
+
+### B. Score Threshold
+
+- **Definition:** Score (from 0.0 to 1.0) to filter noise. Only text segments with matching score above this level will be used.
+- **Recommended value:** `0.6` to `0.7`.
+
+🔧 How to adjust appropriately:
+
+- **Increase (0.75 - 0.8):** If Agent often answers incorrectly or makes things up. You want Agent to "rather not answer than answer wrong". Requires absolute accuracy.
+- **Decrease (0.5 - 0.6):** If Agent often answers "I don't know" even though documents have information (usually because customers use different wording than documents). Decreasing helps Agent be more "flexible" in searching.
+
+![image.png](/images/knowledge/knowledge-e24c671f.png)
+
+
+---
+
+
+**After completing configuration, click Save.**
+
+
+![image.png](/images/knowledge/knowledge-88cd9a24.png)
+
+
+## Testing
+
+
+Never skip this step before publishing.
+
+1. In the **Preview** window on the left side of the screen.
+2. Ask a test question related to the document you just imported.
+3. Observe the answer.
+
+![image.png](/images/knowledge/knowledge-a680c065.png)
 

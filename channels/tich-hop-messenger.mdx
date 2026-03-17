@@ -1,54 +1,58 @@
 ---
-title: "Tích hợp với Messenger"
-sidebarTitle: "Tích hợp với Messenger"
-description: "Tích hợp với Messenger - AI Hive Documentation"
+title: "Messenger Integration"
+sidebarTitle: "Messenger Integration"
+description: "Messenger Integration - AI Hive Documentation"
 ---
 
-# Kết nối Facebook Messenger
+# Messenger Integration
 
 
-Quy trình chuẩn để tích hợp AIHive vào Fanpage, giúp Bot tự động trả lời tin nhắn khách hàng.
+**Connect Facebook Messenger** is the standard process to integrate AIHive with your Fanpage, enabling the Bot to automatically respond to customer messages.
 
 
-## Quy trình thực hiện
+---
 
 
-### Bước 1: Xuất bản Agent
+## Implementation Process
 
 
-Trước khi kết nối, hãy đảm bảo Agent của bạn đã sẵn sàng.
-
-1. Tại giao diện cấu hình Agent, nhấn nút **Xuất bản (Publish)** ở góc trên cùng bên phải màn hình.
-2. Hệ thống sẽ lưu lại toàn bộ cấu hình Prompt, Knowledge và Tools mới nhất của bạn.
-
-![eb86804f-c636-4ac8-a6a5-25364078b05b.png](/images/channels/channels-eb14db5f.png)
+### Step 1: Publish Agent
 
 
-### Bước 2: Truy cập menu Tích hợp
+Before connecting, ensure your Agent is ready.
 
-1. Tại thanh menu bên trái, tìm và nhấn vào mục **Tích hợp (Integrations)** (hoặc _Kênh/Channels_ tùy phiên bản).
-2. Tìm thẻ **Facebook Messenger**.
+1. On the Agent configuration interface, click the **Publish** button in the top right corner.
+2. The system will save all your latest Prompt, Knowledge, and Tools configurations.
 
-![f08f8a63-698b-4ea4-aa92-1988d219a917.png](/images/channels/channels-0a422a2d.png)
+![image.png](/images/channels/channels-07d852d4.png)
 
 
-### Bước 3: Đăng nhập Facebook
+### Step 2: Access the Integration Menu
 
-1. Nhấn nút **Kết nối (Connect)** tại thẻ Facebook.
-2. Một cửa sổ popup hiện ra, nhấn **"Tiếp tục dưới tên..." (Continue as...)** để đăng nhập bằng tài khoản Facebook cá nhân đang quản trị Fanpage.
+1. In the left menu bar, find and click on **Integrations** (or _Channels_ depending on the version).
+2. Find the **Facebook Messenger** card.
+
+![image.png](/images/channels/channels-6bc3ccc3.png)
+
+
+### Step 3: Login to Facebook
+
+1. Click the **Connect** button on the Facebook card.
+2. A popup window appears. Click **"Continue as..."** to log in with the personal Facebook account that manages the Fanpage.
 
 ![image.png](/images/channels/channels-57f0ae39.png)
 
 
-### Bước 4: Cấp quyền quản lý Page
+### Step 4: Grant Page Management Permission (Important)
 
 
-Đây là bước quan trọng nhất.
+This is the most critical step.
 
-1. Chọn dòng **"Chỉnh sửa các cài đặt trước đây"** (hoặc _Edit Settings_) nếu bạn đã từng kết nối trước đó, hoặc chọn danh sách Page mới.
-2. Tích chọn vào ô: **"Chọn áp dụng cho riêng Trang hiện tại"**.
-3. Đánh dấu tích xanh vào đúng **Fanpage** mà bạn muốn tích hợp Agent này.
-4. Nhấn **Tiếp (Next)** và cấp đủ các quyền (Manage Page, Send Messages...).
+1. Select **"Edit previous settings"** (if you've connected before) or select from the new Page list.
+2. **Crucial:** Check the box **"Apply only for the current Page"**.
+3. Tick the exact **Fanpage** you want to integrate this Agent with.
+4. Click **Next** and grant all required permissions (Manage Page, Send Messages...).
+> ⚠️ Note: If you do not grant full permissions, the Bot may not be able to read or reply to messages.
 
 ![image.png](/images/channels/channels-78eab567.png)
 
@@ -56,10 +60,10 @@ Trước khi kết nối, hãy đảm bảo Agent của bạn đã sẵn sàng.
 ![image.png](/images/channels/channels-fc81c997.png)
 
 
-### Bước 5: Hoàn tất
+### Step 5: Complete
 
-1. Sau khi cấp quyền xong, nhấn **Lưu (Save)**.
-2. Quay lại màn hình AIHive, bạn sẽ thấy trạng thái của Fanpage chuyển sang **Đã kết nối (Connected)** màu xanh.
+1. After granting permissions, click **Save** / **Done**.
+2. Return to the AIHive screen, you will see the Fanpage status change to **Connected** (Green).
 
 ![image.png](/images/channels/channels-ecc7c598.png)
 
@@ -67,14 +71,12 @@ Trước khi kết nối, hãy đảm bảo Agent của bạn đã sẵn sàng.
 ---
 
 
-## Kiểm tra hoạt động (Testing)
+## Testing
 
 
-Sau khi kết nối thành công:
+After a successful connection, verify the integration:
 
-1. Mở ứng dụng Facebook hoặc Messenger trên điện thoại.
-2. Vào Fanpage vừa kết nối, đóng vai khách hàng nhắn tin thử: _"Xin chào"_.
-3. Nếu Bot trả lời lại ngay lập tức -> Bạn đã thành công! 🎉
-
-![image.png](/images/channels/channels-4780c89a.png)
-
+1. Open the **Facebook** or **Messenger** app on your phone.
+2. Go to the connected Fanpage.
+3. Act as a customer and send a test message (e.g., _"Hello"_).
+4. If the Bot responds immediately -> **You've succeeded!** 🎉

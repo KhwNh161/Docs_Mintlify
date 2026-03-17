@@ -1,52 +1,52 @@
 ---
-title: "Thuật ngữ"
-sidebarTitle: "Thuật ngữ"
-description: "Thuật ngữ - AI Hive Documentation"
+title: "Terminology"
+sidebarTitle: "Terminology"
+description: "Terminology - AI Hive Documentation"
 ---
 
-# Các thuật ngữ trong AIHive Studio
+# Terminology in AIHive Studio
 
 
-Để sử dụng thành thạo AIHive, bạn cần nắm vững các khái niệm cơ bản dưới đây xuất hiện trong giao diện quản trị (Studio).
+To use AIHive proficiently, you need to master the following basic concepts that appear in the administration interface (Studio).
 
 
-## Các đối tượng chính
+## Main Objects
 
 
-### Agent (Trợ lý AI)
+### Agent (AI Assistant)
 
 
-Là một thực thể bot độc lập được cấu hình để thực hiện một vai trò cụ thể.
+An independent bot entity configured to perform a specific role.
 
-- **Ví dụ:** Bạn có thể tạo 1 Agent tên là "Nhân viên Sale" chuyên chốt đơn, và 1 Agent khác tên là "CSKH" chuyên giải quyết khiếu nại.
-- Mỗi Agent có **Prompt** (lời nhắc) và **Kiến thức** riêng.
+- **Example:** You can create an Agent named "Sales Staff" specialized in closing orders, and another Agent named "Customer Service" specialized in handling complaints.
+- Each Agent has its own **Prompt** and **Knowledge**.
 
-### Chat Flow (Luồng hội thoại)
-
-
-Là kịch bản hội thoại dạng cây (Decision Tree) được thiết kế cố định.
-
-- Dùng khi bạn muốn khách hàng đi theo một quy trình bắt buộc.
-- **Ví dụ:** Kịch bản xin thông tin bảo hành: Hỏi tên → Hỏi SĐT → Hỏi lỗi.
-
-### Workflow (Quy trình làm việc)
+### Chat Flow (Conversation Flow)
 
 
-Là chuỗi các hành động xử lý dữ liệu chạy ngầm (Backend).
+A fixed tree-structured (Decision Tree) conversation script.
 
-- **Ví dụ:** Khi khách chốt đơn → Workflow sẽ chạy: "Lấy thông tin khách" → "Gọi API KiotViet tạo đơn" → "Gửi tin nhắn xác nhận".
+- Used when you want customers to follow a mandatory process.
+- **Example:** Warranty information collection script: Ask for name → Ask for phone number → Ask about the issue.
 
-### Knowledge (Kiến thức)
-
-
-Là kho dữ liệu bạn nạp vào cho Bot học.
-
-- Dữ liệu có thể là: File tài liệu (PDF, Word), Đường dẫn Website (URL), hoặc Văn bản nhập tay (Q&A).
-- Đây là yếu tố quyết định sự thông minh của Agent.
-
-### Prompt (Câu lệnh nhắc)
+### Workflow (Work Process)
 
 
-Là bản mô tả vai trò và nhiệm vụ cho AI.
+A chain of data processing actions running in the background (Backend).
 
-- **Ví dụ:** "Bạn là nhân viên tư vấn của shop thời trang XFashion. Giọng điệu vui vẻ, dùng nhiều icon. Chỉ trả lời các câu hỏi liên quan đến thời trang..."
+- **Example:** When a customer confirms an order → Workflow will run: "Get customer information" → "Call KiotViet API to create order" → "Send confirmation message".
+
+### Knowledge
+
+
+The data repository you feed to the Bot for learning.
+
+- Data can be: Document files (PDF, Word), Website URLs, or manually entered text (Q&A).
+- This is the key factor determining the intelligence of an Agent.
+
+### Prompt (Instruction Command)
+
+
+A description of the role and tasks for the AI.
+
+- **Example:** "You are a consultant for XFashion clothing store. Cheerful tone, use many icons. Only answer questions related to fashion..."

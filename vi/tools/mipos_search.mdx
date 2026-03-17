@@ -1,0 +1,88 @@
+---
+title: "Tích hợp Pos để tư vấn sản phẩm"
+sidebarTitle: "Tích hợp Pos để tư vấn sản phẩm"
+description: "Tích hợp Pos để tư vấn sản phẩm - AI Hive Documentation"
+---
+
+## Tích hợp MiPos (Tìm kiếm sản phẩm)
+
+
+Công cụ MiPos cho phép AI Agent truy cập vào kho dữ liệu sản phẩm của bạn trên MiPos để tìm kiếm, báo giá và gửi thông tin sản phẩm cho khách hàng ngay trong cuộc trò chuyện.
+
+
+### Bước 1: Chuẩn bị dữ liệu trên MiPos 
+
+
+Trước tiên, bạn cần đảm bảo đã có tài khoản và sản phẩm trên hệ thống MiPos.
+
+1. Đăng ký và đăng nhập vào trang quản trị MiPos.
+2. Tạo mới một Shop (Cửa hàng).
+3. Thêm đầy đủ các sản phẩm vào Shop đó (Tên, Giá, Ảnh...).
+
+![image.png](/images/tools/tools-a7032115.png)
+
+
+### Bước 2: Thêm công cụ MiPos vào Agent
+
+
+Quay trở lại giao diện **AIHive Studio** để thực hiện kết nối.
+
+
+Chọn Agent bạn muốn tích hợp -> Vào tab **Cấu hình**.
+
+
+Kéo xuống mục **Tools** **Công cụ / Tích hợp CRM, ERP**-> Nhấn nút **Thêm**.
+
+
+![image.png](/images/tools/tools-b195f9da.png)
+
+
+Trong danh sách hiện ra, tìm và chọn công cụ **"Tìm kiếm sản phẩm MiPos"**.
+
+
+![image.png](/images/tools/tools-fe251bdc.png)
+
+
+### Bước 3: Cấu hình kết nối (API Key)
+
+
+Để Agent "nói chuyện" được với Shop của bạn, bạn cần cung cấp chìa khóa kết nối.
+
+1. Sau khi thêm, nhấn vào biểu tượng **Chữ i** bên cạnh công cụ MiPos vừa thêm.
+2. Một bảng nhập liệu sẽ hiện ra, yêu cầu 2 thông số:
+    - **API Key:** Mã khóa bảo mật.
+    - **Shop ID:** Mã định danh cửa hàng.
+
+![image.png](/images/tools/tools-6fb24491.png)
+
+
+### Lấy thông tin ở đâu?
+
+
+Mở lại tab trang quản trị **MiPos**.
+
+
+Tìm đến mục **Cấu hình (Settings)** hoặc **API Developer**.
+
+
+Copy dòng `API Key` và `Shop ID` rồi dán ngược lại vào AIHive Studio.
+
+
+![image.png](/images/tools/tools-84b79d95.png)
+
+
+![image.png](/images/tools/tools-b21d1655.png)
+
+
+Nhấn **Lưu (Save)**.
+
+
+---
+
+
+Kiểm tra hoạt động
+Sau khi lưu xong, hãy thử chat với Bot: _"Tìm cho mình son kem"_. Nếu Bot trả ra đúng sản phẩm có trong kho MiPos của bạn thì chúc mừng, bạn đã kết nối thành công!
+
+
+![0a001115-0e0d-40f7-886e-1fa4f9682bc0.png](/images/tools/tools-7e8c5454.png)
+

@@ -1,0 +1,72 @@
+---
+title: " Tự động tạo đơn trên Pos"
+sidebarTitle: " Tự động tạo đơn trên Pos"
+description: " Tự động tạo đơn trên Pos - AI Hive Documentation"
+---
+
+# Tự động tạo đơn hàng với MiPos (Auto Order)
+
+
+Tính năng cao cấp nhất của AIHive là khả năng "chốt đơn" tự động. Bot sẽ không chỉ tư vấn mà còn trực tiếp tạo đơn hàng trên hệ thống MiPos khi khách cung cấp đủ thông tin nhận hàng.
+
+
+## Nguyên lý hoạt động (Quan trọng)
+
+
+Để tạo được đơn hàng chính xác, Bot cần biết chính xác khách mua **Phiên bản (Variant)** nào (Ví dụ: Áo màu Đỏ, Size L) chứ không chỉ là tên sản phẩm chung chung.
+
+
+Do đó, quy trình cấu hình sẽ thay đổi như sau:
+
+- **TẮT:** Công cụ `mipos_product_search` (Tìm kiếm chung).
+- **BẬT:** Công cụ `mipos_search_variants` (Tìm kiếm phiên bản cụ thể).
+- **BẬT:** Công cụ `mipos_create_order` (Tạo đơn hàng).
+
+---
+
+
+## Quy trình cấu hình chi tiết
+
+
+### Bước 1: Điều chỉnh bộ Công cụ (Tools)
+
+
+Truy cập vào **AIHive Studio** -> Chọn Agent -> Tab **Cấu hình (Configuration)**.
+
+1. Tại mục **Tools**, tìm công cụ `mipos_product_search` (nếu đang bật) và gạt nút sang trái để **TẮT** nó đi.
+2. Nhấn nút **+ Add Tool** và thêm lần lượt 2 công cụ mới:
+    - `mipos_search_variants`
+    - `mipos_create_order`
+
+![1b90acd8-9d2a-4183-b225-1827bdf88869.png](/images/tools/tools-ca4f8f96.png)
+
+
+### Bước 2: Cấu hình kết nối API
+
+
+Bạn cần nhập API Key cho cả 2 công cụ mới này (Thao tác giống hệt phần trên ).
+
+1. Nhấn vào biểu tượng **Chữ i (Setting)** bên cạnh công cụ `mipos_create_order`.
+2. Nhập **API Key** và **Shop ID** (Lấy từ trang quản trị MiPos).
+3. Làm tương tự với công cụ `mipos_search_variants`.
+
+![86f321a1-0b8f-4082-af67-ed2ed0f7a1c4.png](/images/tools/tools-9213d043.png)
+
+
+## Kết quả hoạt động
+
+
+Sau khi hoàn tất cấu hình, khi khách hàng chat và chốt mua, Bot sẽ tự động thực hiện quy trình sau:
+
+1. **Khách hàng:** "Mình lấy thỏi son Black Rouge màu đỏ nha, sđt 0912xxx, địa chỉ tại..."
+2. **Bot:** Tự động gọi API tạo đơn hàng sang MiPos.
+3. **Phản hồi:** Bot gửi ngay mã vận đơn cho khách: _"Đơn hàng của bạn đã được tạo thành công! Cảm ơn bạn!"_
+
+Đồng thời, trong trang quản trị MiPos, đơn hàng mới sẽ xuất hiện ngay lập tức mà không cần nhân viên nhập tay.
+
+
+![image.png](/images/tools/tools-93b4c0fe.png)
+
+
+![image.png](/images/tools/tools-7a96b20d.png)
+

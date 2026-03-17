@@ -1,0 +1,203 @@
+---
+title: "Developers"
+sidebarTitle: "Developers"
+description: "Developers - AI Hive Documentation"
+---
+
+# Tài liệu cho Lập trình viên (Developers & API)
+
+
+AIHive cung cấp bộ công cụ mạnh mẽ (API & SDK) giúp bạn tích hợp trí tuệ nhân tạo vào website, ứng dụng di động hoặc hệ thống quản trị nội bộ (ERP/CRM) một cách nhanh chóng.
+
+
+---
+
+
+## Tích hợp Chat Widget (Web SDK)
+
+
+Đây là giải pháp "mì ăn liền" (No-code) giúp bạn đưa AIHive lên website chỉ với một đoạn mã HTML đơn giản.
+
+
+Đầu tiên hãy vào giao diện **“Thiết lập AI”**, sau khi thiết lập hoàn tất. Nhấn **“Xuất bản”**
+
+
+![image.png](/images/developers/developers-5d3f76a4.png)
+
+
+### Cách 1: Nút Chat nổi (Floating Bubble)
+
+
+Hiển thị biểu tượng chat ở góc màn hình. Phù hợp cho Landing Page hoặc trang chủ.
+
+
+Copy đoạn mã sau và dán vào thẻ `<body>` hoặc `<footer>` của website:
+
+
+```html
+<script>
+ window.difyChatbotConfig = \{
+  token: 'YOUR_TOKEN_HERE', // Thay bằng Token lấy trong trang cấu hình Agent
+  baseUrl: '[<https://api.aihive.global>](<https://api.aihive.global>)'
+ \}
+</script>
+<script
+ src="[<https://api.aihive.global/embed.min.js>](<https://api.aihive.global/embed.min.js>)"
+ id="YOUR_TOKEN_HERE"
+ defer>
+</script>
+```
+
+
+### Cách 2: Nhúng toàn màn hình (Full Page)
+
+
+Biến một trang web con thành giao diện chat AI chuyên biệt (giống giao diện ChatGPT).
+
+
+Dán đoạn mã sau vào thẻ `<body>`:
+
+
+```html
+<style>
+ /* Ẩn nút bấm, ép khung chat full màn hình */
+ #dify-chatbot-bubble-button \{
+  display: none;
+ \}
+ #dify-chatbot-bubble-window \{
+  width: 100% !important;
+  height: 100% !important;
+  bottom: 0 !important;
+  right: 0 !important;
+ \}
+</style>
+
+<script>
+ window.difyChatbotConfig = \{
+  token: 'YOUR_TOKEN_HERE',
+  baseUrl: '[<https://api.aihive.global>](<https://api.aihive.global>)'
+ \}
+</script>
+<script
+ src="[<https://api.aihive.global/embed.min.js>](<https://api.aihive.global/embed.min.js>)"
+ id="YOUR_TOKEN_HERE"
+ defer>
+</script>
+```
+
+
+### Cách 3: Nhúng iFrame (Khung chat cố định)
+
+
+Chèn khung chat vào một vị trí cố định trong bài viết hoặc giao diện dashboard quản trị.
+
+
+```html
+<iframe
+ src="[<https://app.AIHive.com/chatbot/YOUR_TOKEN_HERE>](<https://app.aihive.globalchatbot/YOUR_TOKEN_HERE>)"
+ style="width: 100%; height: 600px; border: none; border-radius: 10px;">
+</iframe>
+```
+
+
+## Chat API (Backend Integration)
+
+
+Sử dụng API này để xây dựng giao diện chat tùy chỉnh (Custom UI) trên Mobile App hoặc gửi/nhận tin nhắn từ Server của bạn.
+
+
+### 1. Thông tin kết nối
+
+- **Base URL:** `https://api.aihive.global/v1`
+- **Endpoint:** `/chat-messages`
+- **Method:** `POST`
+
+### 2. Xác thực (Authentication)
+
+
+Vào giao diện thiết lập Agent nhấn “Xuất bản” và copy đoạn API Key ở đây
+
+
+![e5f16786-9736-4fa0-bbb1-9b4defff81dc.png](/images/developers/developers-142f9bfa.png)
+
+
+### 2. Xác thực (Authentication)
+
+
+Mọi request đều phải kèm theo Header xác thực để bảo mật:
+
+
+```html
+Authorization: Bearer app-xxxxxxxxxxxxxxxxxxxxxxxx
+Content-Type: application/json
+```
+
+
+### 3.Body Parameters (Dữ liệu gửi đi)
+
+
+| **Tham số**         | **Kiểu dữ liệu** | **Bắt buộc** | **Mô tả**                                                                                            |
+| ------------------- | ---------------- | ------------ | ---------------------------------------------------------------------------------------------------- |
+| **inputs**          | Object           | ✅            | Các biến đầu vào (Ví dụ: tên, tuổi). Để trống `\{\}` nếu không dùng.                                   |
+| **query**           | String           | ✅            | Nội dung tin nhắn của người dùng (Ví dụ: "Xin chào").                                                |
+| **response_mode**   | String           | ✅            | `blocking`: Chờ trả về kết quả 1 lần (Khuyên dùng).
+`streaming`: Trả về từng từ (hiệu ứng gõ chữ).   |
+| **conversation_id** | String           | ❌            | ID cuộc hội thoại. Để trống `""` ở tin nhắn đầu tiên. Các tin sau gửi lại ID cũ để Bot nhớ ngữ cảnh. |
+| **user**            | String           | ✅            | ID định danh người dùng duy nhất (Ví dụ: `user-123`).                                                |
+
+
+### 4. Ví dụ Request (cURL)
+
+
+Bạn có thể test nhanh kết nối bằng Terminal:
+
+
+```bash
+curl -X POST '[<https://api.aihive.global/v1/chat-messages>](<https://api.aihive.global/v1/chat-messages>)' \\
+--header 'Authorization: Bearer app-xxxxxxxxxxxxxxxxxxxxxxxx' \\
+--header 'Content-Type: application/json' \\
+--data-raw '\{
+    "inputs": \{\},
+    "query": "Tư vấn cho tôi về sản phẩm",
+    "response_mode": "blocking",
+    "conversation_id": "",
+    "user": "khach-hang-01"
+\}'
+```
+
+
+### 5. Ví dụ Response (Kết quả trả về)
+
+
+Nếu gọi thành công, Server sẽ trả về JSON chứa câu trả lời của AI:
+
+
+```json
+\{
+    "event": "message",
+    "message_id": "99f074xx-xxxx-xxxx",
+    "conversation_id": "88e912xx-xxxx-xxxx",
+    "mode": "chat",
+    "answer": "Chào bạn, AIHive có thể giúp gì cho bạn hôm nay?",
+    "metadata": \{
+        "usage": \{
+            "prompt_tokens": 50,
+            "completion_tokens": 20,
+            "total_tokens": 70
+        \}
+    \},
+    "created_at": 1705634000
+\}
+```
+
+
+## Xử lý lỗi (Error Handling)
+
+
+| **Mã lỗi (HTTP Code)**    | **Nguyên nhân**       | **Cách khắc phục**                                                   |
+| ------------------------- | --------------------- | -------------------------------------------------------------------- |
+| **401 Unauthorized**      | Sai API Key.          | Kiểm tra lại Header `Authorization` xem đã đúng key chưa.            |
+| **402 Payment Required**  | Hết hạn mức gói cước. | Nạp tiền hoặc nâng cấp gói AIHive.                                   |
+| **404 Not Found**         | Sai đường dẫn API.    | Kiểm tra lại Base URL xem có đúng `https://api.aihive.global` không. |
+| **429 Too Many Requests** | Gửi quá nhanh (Spam). | Giới hạn tốc độ gửi tin hoặc liên hệ nâng cấp.                       |
+

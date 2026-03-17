@@ -1,0 +1,279 @@
+---
+title: "Chat Flow"
+sidebarTitle: "Chat Flow"
+description: "Chat Flow - AI Hive Documentation"
+---
+
+# Hướng dẫn: Xây dựng "Trợ lý AI Viết Báo Giá" bằng Chat Flow
+
+
+
+
+Bạn có mệt mỏi khi khách hàng chỉ nói một câu bâng quơ _"Anh muốn làm app giống Uber"_ rồi yêu cầu gửi báo giá chi tiết ngay lập tức? Thay vì mất 2 tiếng hì hục viết, bài này sẽ hướng dẫn bạn dùng **AIHive Chat Flow** để tạo ra một con Bot tự động làm việc này chỉ trong 30 giây.
+
+
+
+
+Chúng ta sẽ sử dụng **Chat Flow** - công cụ kéo thả tư duy (Logic Graph) của AIHive. Bạn không cần biết code vẫn làm được!
+
+
+
+
+## Tư duy "Dây chuyền sản xuất" (Concept)
+
+
+
+
+Trước khi bắt tay vào làm, hãy tưởng tượng Chat Flow giống như một dây chuyền nhà máy gồm các nhân viên ngồi nối tiếp nhau:
+
+
+
+- **Node (Khối):** Là từng nhân viên chuyên trách (Ví dụ: Node A chuyên phân tích, Node B chuyên viết văn).
+
+
+- **Dây nối:** Là băng chuyền để chuyển hồ sơ từ ông này sang ông kia.
+
+
+- **Biến số (Variables)** **`\{\{...\}\}`****:** Đây là khái niệm quan trọng nhất. Khi ông B muốn làm việc, ông ấy phải lấy kết quả của ông A để xử lý tiếp.
+
+
+> 🔑 Quy tắc vàng: Muốn lấy dữ liệu của Node đi trước, hãy gõ phím \{ (ngoặc nhọn) trong ô nhập liệu để mở danh sách biến.
+
+
+
+---
+
+
+
+
+## Thực hành chi tiết (Step-by-Step)
+
+
+
+
+Khi bạn vừa tạo mới Chat Flow, màn hình Canvas sẽ hiện ra sẵn 2 khối cơ bản: **Start (Bắt đầu)** và **Answer (Trả lời)** được nối với nhau.
+
+
+
+
+### Bước 1: Cấu hình Node "Start" (Đầu vào)
+
+
+
+
+Node này đã có sẵn, bạn chỉ cần bấm vào nó để sửa.
+
+
+
+1. Click vào node **Start**.
+
+
+2. Đảm bảo trong bảng cấu hình có trường **`sys.query`**. Đây chính là nơi hứng câu chat của khách hàng.
+
+
+
+![image.png](/images/chatflow/chatflow-374c4c58.png)
+
+
+
+
+### Bước 2: Thêm Node "BA Phân Tích"
+
+
+
+
+_Nhiệm vụ: Đọc_ _`sys.query`_ _để phân tích._
+
+
+
+1. Thêm node **LLM** vào sau Start, đổi tên thành `BA_Phan_Tich`.
+
+
+2. Ở phần “Ngữ cảnh” chọn :_`sys.query`_
+
+
+4. **Cấu hình USER (Tạo ngữ cảnh bằng Biến):**
+    - Gõ lời dẫn: `Phân tích yêu cầu khách hàng sau:`
+    - **Chèn biến:** Gõ phím `\{` Chọn Chọn **sys.query**.
+    - _Hiển thị chuẩn:_ `Phân tích yêu cầu khách hàng sau: \{\{Start.sys_query\}\}`
+
+
+
+![image.png](/images/chatflow/chatflow-2ef180af.png)
+
+
+
+
+---
+
+
+
+
+### Bước 3: Thêm Node "Tech Architect"
+
+
+
+
+_Nhiệm vụ: Đọc kết quả phân tích của BA để chọn công nghệ._
+
+
+
+1. Thêm node **LLM** vào sau BA,nối với BA đổi tên thành `Tech_Stack`.
+
+
+2. **Cấu hình Ngữ cảnh:** Chọn `\{\{BA_Phan_Tich.text\}\}`
+
+
+3. **Cấu hình SYSTEM:**
+
+    "Bạn là Solution Architect. Hãy đề xuất bộ công nghệ (Tech Stack) tối ưu nhất cho dự án này.
+    Ưu tiên Stack hiện đại:
+
+    - Mobile: Flutter (Cross-platform).
+    - Backend: Node.js (NestJS) hoặc Supabase.
+    - Database: PostgreSQL.
+    Giải thích ngắn gọn lý do chọn.."
+
+
+4. **Cấu hình USER (Tạo ngữ cảnh bằng Biến):**
+    - Gõ lời dẫn: `Dựa trên bản phân tích chức năng sau:`
+    - **Chèn biến:** Gõ phím `\{`  Chọn `\{\{BA_Phan_Tich.text\}\}`
+    - _Hiển thị chuẩn:_ `Dựa trên bản phân tích chức năng sau: \{\{BA_Phan_Tich.text\}\}`
+
+
+
+![image.png](/images/chatflow/chatflow-d87a6ee0.png)
+
+
+
+
+---
+
+
+
+
+### Bước 4: Thêm Node "Viết Báo Giá" (Quan trọng)
+
+
+
+
+_Nhiệm vụ: Đọc TẤT CẢ biến cũ để tổng hợp thành văn bản._
+
+
+
+1. Thêm node **LLM** vào sau Tech_Stack, đổi tên thành `Viet_Bao_Gia`.
+
+
+2. Ở phần “Ngữ cảnh” chọn : **Tech_Stack** / **text**
+
+
+3. **Cấu hình SYSTEM:**
+    > Bạn là Giám đốc kinh doanh. Nhiệm vụ của bạn là viết một bản Báo Giá (Technical Proposal) chuyên nghiệp, thuyết phục để gửi khách hàng ngay lập tức.  
+    > Định dạng: Markdown đẹp mắt.  
+    > Cấu trúc bắt buộc:
+>     1. Tổng quan dự án (Hiểu nỗi đau của khách).
+>     2. Phạm vi công việc (Scope of Work - lấy từ BA).
+>     3. Giải pháp kỹ thuật (Tech Stack - lấy từ Architect).
+>     4. Lộ trình triển khai (Timeline dự kiến theo tuần).
+>     5. Ước lượng ngân sách (Range giá tham khảo bằng VNĐ).
+>     Giọng văn: Chuyên nghiệp, tin cậy, kích thích chốt đơn.
+>
+
+
+4. **Cấu hình USER (Gom 3 biến vào ngữ cảnh):**
+Bạn cần chèn lần lượt 3 biến để AI có đủ thông tin. Nhập y hệt bên dưới:
+    - Gõ: `1. Yêu cầu của khách:`  Gõ `\{` chọn **Start** / **sys.query**
+    - Gõ: `2. Chức năng chi tiết:`  Gõ `\{` chọn **BA_Phan_Tich** / **text**
+    - Gõ: `3. Công nghệ đề xuất:` Gõ `\{` chọn **Tech_Stack** / **text**
+
+    _Giao diện lúc này sẽ trông như sau:_
+
+
+    ```plain text
+    1. Yêu cầu của khách: \{\{Start.sys_query\}\}
+    2. Chức năng chi tiết: \{\{BA_Phan_Tich.text\}\}
+    3. Công nghệ đề xuất: \{\{Tech_Stack.text\}\}
+    ```
+
+
+
+
+![image.png](/images/chatflow/chatflow-a1887775.png)
+
+
+
+
+---
+
+
+
+
+### Bước 5: Node "Answer" (Trả kết quả)
+
+
+
+
+_Nhiệm vụ: Lấy biến cuối cùng in ra màn hình._
+
+
+
+1. Click vào node **Answer** ở cuối dòng.
+
+
+2. Tại ô **Response**, xóa hết chữ cũ.
+
+
+3. **Chèn biến:** Gõ phím `\{` Chọn **Viet_Bao_Gia** **text**.
+    - _Hiển thị chuẩn:_ `\{\{Viet_Bao_Gia.text\}\}`
+
+
+
+![03e871a4-f326-4081-8f2e-c270d5f006e4.png](/images/chatflow/chatflow-38b7e20a.png)
+
+
+
+
+## Giải mã lỗi thường gặp (Troubleshoot)
+
+
+
+
+Trong quá trình làm, 99% người mới sẽ gặp lỗi dòng chữ màu đỏ báo: _"Vui lòng điền biến ngữ cảnh vào PROMPT"_.
+
+
+
+- **Nguyên nhân:** Bạn đã dùng biến `\{\{Start.query\}\}` trong lời nhắc, NHƯNG bạn chưa khai báo nó trong phần Context.
+
+
+- **Cách khắc phục:**
+    1. Nhìn xuống dưới ô System của Node bị lỗi.
+    2. Tìm mục **Context (Ngữ cảnh)**.
+    3. Nhấn **Add**.
+    4. Chọn đúng cái biến mà bạn đang dùng trong Prompt.
+    5. Lỗi màu đỏ sẽ biến mất.
+
+
+
+---
+
+
+
+
+## Thành quả
+
+
+
+
+Bây giờ hãy bấm nút **Gỡ lỗi và xem trước** ở góc phải màn hình.
+
+
+
+- **Nhập thử:** _"Tôi muốn làm app đặt lịch khám bệnh."_
+
+
+- **Kết quả:** Bạn sẽ thấy các Node sáng đèn chạy lần lượt: BA phân tích -> Tech chọn công nghệ -> Sale viết bài. Cuối cùng trả ra một bản báo giá dài cả trang A4 cực kỳ chuyên nghiệp.
+
+
+
+![5f79401e-f215-4c5f-a724-5cb5f3ccdb82.png](/images/chatflow/chatflow-74106708.png)
+

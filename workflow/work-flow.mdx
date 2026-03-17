@@ -1,133 +1,133 @@
 ---
-title: "Work Flow"
-sidebarTitle: "Work Flow"
-description: "Work Flow - AI Hive Documentation"
+title: "WorkFlow "
+sidebarTitle: "WorkFlow "
+description: "WorkFlow  - AI Hive Documentation"
 ---
 
-# Hướng dẫn tạo Workflow (Quy trình tự động hóa)
+# Workflow Guide (Automation Process)
 
 
-**Workflow** (Quy trình làm việc) là tính năng mạnh mẽ giúp bạn tự động hóa các tác vụ phức tạp gồm nhiều bước nối tiếp nhau (Ví dụ: Viết bài chuẩn SEO -> Dịch sang tiếng Anh -> Đăng lên Facebook).
+**Workflow** is a powerful feature that helps you automate complex tasks consisting of multiple sequential steps (e.g., Write SEO article -> Translate to English -> Post to Facebook).
 
 
-Khác với Chat Flow (tương tác qua lại với người dùng), Workflow chạy một mạch từ đầu đến cuối để ra kết quả.
+Unlike Chat Flow (interactive with users), Workflow runs straight through from start to finish to produce results.
 
 
-## Tư duy thiết kế Workflow
+## Workflow Design Thinking
 
 
-Một Workflow chuẩn luôn gồm 3 thành phần chính:
+A standard Workflow always consists of 3 main components:
 
-1. **Start (Đầu vào):** Nơi bạn nhập dữ liệu (Ví dụ: Từ khóa, Chủ đề).
-2. **Nodes (Các bước xử lý):** Các "nhân viên AI" thực hiện từng nhiệm vụ nhỏ (Viết, Dịch, Tóm tắt...).
-3. **End (Đầu ra):** Kết quả cuối cùng bạn nhận được.
-> 💡 Quy tắc vàng: Kết quả của bước trước là nguyên liệu đầu vào cho bước sau. Hãy dùng biến \{\{...\}\} để chuyển giao dữ liệu giữa các bước.
-
----
-
-
-## Thực hành: Tạo Workflow "Viết bài chuẩn SEO"
-
-
-Trong bài hướng dẫn này, chúng ta sẽ xây dựng một quy trình tự động gồm 3 bước:
-
-- **Bước 1:** Lập dàn ý bài viết từ từ khóa.
-- **Bước 2:** Viết bài chi tiết dựa trên dàn ý.
-- **Bước 3:** Tạo tiêu đề hấp dẫn (Giật tít).
-
-### Bước 1: Khởi tạo Workflow
-
-1. Tại màn hình **Studio**, nhấn nút **Tạo mới (+)**.
-2. Chọn loại ứng dụng: **Workflow**.
-3. Đặt tên: _"Quy trình viết bài SEO"_.
-4. Nhập mô tả (không bắt buộc) và nhấn **Tạo**.
-
-![image.png](/images/workflow/workflow-b7a15baf.png)
-
-
-### Bước 2: Cấu hình đầu vào (Start Node)
-
-
-Chúng ta cần khai báo cho Bot biết người dùng sẽ nhập gì vào.
-
-1. Click vào node **Start**.
-2. Tại bảng cấu hình, nhấn **+ Add Variable** (Thêm biến).
-3. Điền thông tin biến:
-    - **Variable Name (Tên biến):** `topic` (Viết liền không dấu).
-    - **Label (Nhãn hiển thị):** `Chủ đề bài viết`.
-    - **Type (Loại):** Text.
-    - **Required (Bắt buộc):** Có.
-
-![image.png](/images/workflow/workflow-c84882c6.png)
-
-
-### Bước 3: Tạo bước "Lập dàn ý" (Node LLM 1)
-
-1. Nhấn dấu **(+)** sau node Start -> Chọn **LLM**.
-2. Đổi tên node: `Lap_Dan_Y`.
-3. **Cấu hình SYSTEM PROMPT:**
-    > "Bạn là chuyên gia SEO. Hãy lập dàn ý chi tiết (Outline) gồm 3 phần: Mở bài, Thân bài (3 ý chính), Kết bài cho chủ đề sau."
-4. **Cấu hình USER PROMPT:**
-    - Bấm `Thêm tin nhắn`
-    - Ở ô `User` Nhập: `Chủ đề:`
-    - Gõ phím `/` -> Chọn `topic` trong node `Bắt đầu`
-    - _Hiển thị:_ `Chủ đề: \{\{Bắt đầu/(x)topic\}\}`
-
-![image.png](/images/workflow/workflow-439f00a2.png)
-
-
-### Bước 4: Tạo bước "Viết bài chi tiết" (Node LLM 2)
-
-1. Nhấn dấu **(+)** sau node `Lap_Dan_Y` -> Chọn **LLM**.
-2. Đổi tên node: `Viet_Bai`.
-3. **Cấu hình SYSTEM PROMPT:**
-    > "Bạn là Copywriter chuyên nghiệp. Dựa trên dàn ý được cung cấp, hãy viết thành một bài blog hoàn chỉnh, văn phong hấp dẫn, dài khoảng 500 từ."
-4. **Cấu hình USER PROMPT:**
-    - Nhập: `Viết bài dựa trên dàn ý sau:`
-    - Gõ phím `/` -> Chọn **Lap_Dan_Y** -> Chọn `text`.
-    - _Lưu ý:_ Chọn biến `text` của node dàn ý, KHÔNG chọn biến `topic` của node Start.
-
-![image.png](/images/workflow/workflow-e01d3324.png)
-
-
-### Bước 5: Cấu hình đầu ra (End Node)
-
-
-Cuối cùng, chúng ta cần xuất bản bài viết ra màn hình.
-
-1. Kéo dây từ node `Viet_Bai` nối vào node **End**.
-2. Click vào node **End**.
-3. Tại mục **Output Variables**, nhấn **+ Add Variable**.
-4. Chọn biến nguồn:
-    - Click vào ô giá trị -> Chọn **Viet_Bai** -> Chọn `text`.
-    - Đặt tên biến đầu ra: `final_article`.
-
-![image.png](/images/workflow/workflow-fba528b4.png)
-
+1. **Start (Input):** Where you enter data (e.g., Keywords, Topics).
+2. **Nodes (Processing Steps):** "AI workers" performing individual tasks (Write, Translate, Summarize...).
+3. **End (Output):** The final result you receive.
+> 💡 Golden Rule: The result of the previous step is the input material for the next step. Use variables \{\{...\}\} to transfer data between steps.
 
 ---
 
 
-## Chạy thử và Kiểm tra (Testing)
+## Practice: Create "SEO Article Writing" Workflow
 
 
-Trước khi dùng thật, hãy chạy thử xem quy trình có mượt không.
+In this tutorial, we'll build an automated process with 3 steps:
 
-1. Nhấn nút **Run (Chạy)** ở góc trên bên phải.
-2. Một ô nhập liệu hiện ra, yêu cầu nhập **Chủ đề bài viết**.
-3. Nhập thử: _"Lợi ích của việc uống nước cam"_.
-4. Nhấn **Run** và quan sát các node sáng đèn lần lượt.
-5. Kết quả cuối cùng sẽ hiển thị bài viết hoàn chỉnh ở khung bên phải.
-6. Sau khi đấy output ổn thì sẽ ấn `Xuất bản`
+- **Step 1:** Create an article outline from keywords.
+- **Step 2:** Write detailed content based on the outline.
+- **Step 3:** Create an attractive headline.
 
-![image.png](/images/workflow/workflow-f77b060d.png)
+### Step 1: Initialize Workflow
+
+1. On the **Studio** screen, click the **Create New (+)** button.
+2. Select application type: **Workflow**.
+3. Name it: _"SEO Article Writing Process"_.
+4. Enter description (optional) and click **Create**.
+
+![image.png](/images/workflow/workflow-ecf91b9a.png)
+
+
+### Step 2: Configure Input (Start Node)
+
+
+We need to declare what the user will input.
+
+1. Click on the **Start** node.
+2. In the configuration panel, click **+ Add Variable**.
+3. Fill in variable information:
+    - **Variable Name:** `topic` (no spaces or special characters).
+    - **Label:** `Article Topic`.
+    - **Type:** Text.
+    - **Required:** Yes.
+
+![image.png](/images/workflow/workflow-fffe9615.png)
+
+
+### Step 3: Create "Create Outline" Step (LLM Node 1)
+
+1. Click the **(+)** after the Start node -> Select **LLM**.
+2. Rename the node: `Create_Outline`.
+3. **Configure SYSTEM PROMPT:**
+    > "You are an SEO expert. Create a detailed outline consisting of 3 parts: Introduction, Body (3 main points), and Conclusion for the following topic."
+4. **Configure USER PROMPT:**
+    - Click `Add message`
+    - In the `User` field, enter: `Topic:`
+    - Press `/` key -> Select `topic` from the `Start` node
+    - _Display:_ `Topic: \{\{Start/(x)topic\}\}`
+
+![image.png](/images/workflow/workflow-e605e896.png)
+
+
+### Step 4: Create "Write Article" Step (LLM Node 2)
+
+1. Click the **(+)** after `Create_Outline` node -> Select **LLM**.
+2. Rename the node: `Write_Article`.
+3. **Configure SYSTEM PROMPT:**
+    > "You are a professional Copywriter. Based on the provided outline, write a complete blog post with engaging style, approximately 500 words."
+4. **Configure USER PROMPT:**
+    - Enter: `Write an article based on the following outline:`
+    - Press `/` key -> Select **Create_Outline** -> Select `text`.
+    - _Note:_ Select the `text` variable from the outline node, NOT the `topic` variable from the Start node.
+
+![image.png](/images/workflow/workflow-94bc428e.png)
+
+
+### Step 5: Configure Output (End Node)
+
+
+Finally, we need to output the article to the screen.
+
+1. Drag a line from `Write_Article` node to connect to the **End** node.
+2. Click on the **End** node.
+3. In **Output Variables**, click **+ Add Variable**.
+4. Select source variable:
+    - Click the value field -> Select **Write_Article** -> Select `text`.
+    - Name the output variable: `final_article`.
+
+![image.png](/images/workflow/workflow-25f6c166.png)
 
 
 ---
 
 
-## Mẹo nâng cao (Pro Tips)
+## Testing
 
-- **Chèn thêm bước duyệt:** Bạn có thể thêm node **"Human Review"** (Duyệt thủ công) vào giữa để con người kiểm tra dàn ý trước khi cho Bot viết bài.
-- **Kết hợp công cụ:** Có thể chèn thêm node **Tools** (Google Search) vào đầu để Bot tự tìm kiếm thông tin mới nhất trước khi viết.
-- **Xuất ra nhiều định dạng:** Tại node End, bạn có thể xuất ra cả Dàn ý và Bài viết cùng lúc bằng cách thêm 2 biến output.
+
+Before actual use, test to see if the process runs smoothly.
+
+1. Click the **Run** button in the top right corner.
+2. An input field appears, requesting the **Article Topic**.
+3. Enter test: _"Benefits of drinking orange juice"_.
+4. Click **Run** and observe the nodes lighting up sequentially.
+5. The final result will display the complete article in the right panel.
+6. Once the output is satisfactory, click `Publish`.
+
+![image.png](/images/workflow/workflow-1148b707.png)
+
+
+---
+
+
+## Pro Tips
+
+- **Add review step:** You can add a **"Human Review"** node in between for manual review of the outline before the Bot writes the article.
+- **Combine tools:** You can add a **Tools** node (Google Search) at the beginning for the Bot to search for the latest information before writing.
+- **Multiple output formats:** At the End node, you can output both Outline and Article simultaneously by adding 2 output variables.
