@@ -17,173 +17,102 @@
   "navigation": {
     "tabs": [
       {
-        "tab": "Hướng dẫn",
+        "tab": "Guide",
         "groups": [
           {
-            "group": "Giới thiệu",
+            "group": "Introduction",
             "pages": [
-              "index",
-              "introduction/tong-quan",
-              "introduction/kien-truc",
-              "introduction/thuat-ngu"
+              "en/index",
+              "en/introduction/tong-quan",
+              "en/introduction/kien-truc",
+              "en/introduction/thuat-ngu"
             ]
           },
           {
-            "group": "Bắt đầu",
+            "group": "Getting Started",
             "pages": [
-              "getting-started/dang-ky",
-              "getting-started/giao-dien"
+              "en/getting-started/dang-ky",
+              "en/getting-started/giao-dien"
             ]
           },
           {
-            "group": "Tạo và cấu hình Agent",
+            "group": "Agent Setup",
             "pages": [
-              "agents/tao_agent_basic",
-              "agents/agent_nangcao"
+              "en/agents/tao_agent_basic",
+              "en/agents/agent_nangcao"
             ]
           },
           {
-            "group": "Kiến thức",
+            "group": "Knowledge Base",
             "pages": [
-              "knowledge/them-kienthuc"
+              "en/knowledge/them-kienthuc"
             ]
           },
           {
             "group": "Tools",
             "pages": [
-              "tools/mipos_search",
-              "tools/mipos_order"
+              "en/tools/mipos_search",
+              "en/tools/mipos_order"
             ]
           },
           {
             "group": "Work Flow",
             "pages": [
-              "workflow/work-flow"
+              "en/workflow/work-flow"
             ]
           },
           {
             "group": "Chat Flow",
             "pages": [
-              "chatflow/chat-flow"
+              "en/chatflow/chat-flow"
             ]
           },
           {
-            "group": "Tính năng mở rộng",
+            "group": "Advanced Features",
             "pages": [
-              "features/ql-workspace",
-              "features/bao-cao-tong-quan",
-              "features/lich-su-hoi-thoai"
+              "en/features/ql-workspace",
+              "en/features/bao-cao-tong-quan",
+              "en/features/lich-su-hoi-thoai"
             ]
           },
           {
-            "group": "Kết nối đa kênh",
+            "group": "Channels",
             "pages": [
-              "channels/tich-hop-messenger"
+              "en/channels/tich-hop-messenger"
             ]
           },
           {
             "group": "Developers",
             "pages": [
-              "developers/developers"
+              "en/developers/developers"
             ]
           },
           {
             "group": "FAQ",
             "pages": [
-              "faq/faq"
+              "en/faq/faq"
             ]
           }
         ]
       }
     ],
-    "global": {},
+    "global": {
+      "languages": [
+        {
+          "language": "en",
+          "href": "/en/index",
+          "default": true
+        },
+        {
+          "language": "vi",
+          "href": "/vi/index"
+        }
+      ]
+    },
     "languages": [
       {
-        "language": "vi",
-        "tabs": [
-          {
-            "tab": "Hướng dẫn",
-            "groups": [
-              {
-                "group": "Giới thiệu",
-                "pages": [
-                  "index",
-                  "introduction/tong-quan",
-                  "introduction/kien-truc",
-                  "introduction/thuat-ngu"
-                ]
-              },
-              {
-                "group": "Bắt đầu",
-                "pages": [
-                  "getting-started/dang-ky",
-                  "getting-started/giao-dien"
-                ]
-              },
-              {
-                "group": "Tạo và cấu hình Agent",
-                "pages": [
-                  "agents/tao_agent_basic",
-                  "agents/agent_nangcao"
-                ]
-              },
-              {
-                "group": "Kiến thức",
-                "pages": [
-                  "knowledge/them-kienthuc"
-                ]
-              },
-              {
-                "group": "Tools",
-                "pages": [
-                  "tools/mipos_search",
-                  "tools/mipos_order"
-                ]
-              },
-              {
-                "group": "Work Flow",
-                "pages": [
-                  "workflow/work-flow"
-                ]
-              },
-              {
-                "group": "Chat Flow",
-                "pages": [
-                  "chatflow/chat-flow"
-                ]
-              },
-              {
-                "group": "Tính năng mở rộng",
-                "pages": [
-                  "features/ql-workspace",
-                  "features/bao-cao-tong-quan",
-                  "features/lich-su-hoi-thoai"
-                ]
-              },
-              {
-                "group": "Kết nối đa kênh",
-                "pages": [
-                  "channels/tich-hop-messenger"
-                ]
-              },
-              {
-                "group": "Developers",
-                "pages": [
-                  "developers/developers"
-                ]
-              },
-              {
-                "group": "FAQ",
-                "pages": [
-                  "faq/faq"
-                ]
-              }
-            ]
-          }
-        ]
-      },
-      {
         "language": "en",
+        "default": true,
         "tabs": [
           {
             "tab": "Guide",
@@ -260,6 +189,90 @@
                 "group": "FAQ",
                 "pages": [
                   "en/faq/faq"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "language": "vi",
+        "tabs": [
+          {
+            "tab": "Hướng dẫn",
+            "groups": [
+              {
+                "group": "Giới thiệu",
+                "pages": [
+                  "vi/index",
+                  "introduction/tong-quan",
+                  "introduction/kien-truc",
+                  "introduction/thuat-ngu"
+                ]
+              },
+              {
+                "group": "Bắt đầu",
+                "pages": [
+                  "getting-started/dang-ky",
+                  "getting-started/giao-dien"
+                ]
+              },
+              {
+                "group": "Tạo và cấu hình Agent",
+                "pages": [
+                  "agents/tao_agent_basic",
+                  "agents/agent_nangcao"
+                ]
+              },
+              {
+                "group": "Kiến thức",
+                "pages": [
+                  "knowledge/them-kienthuc"
+                ]
+              },
+              {
+                "group": "Tools",
+                "pages": [
+                  "tools/mipos_search",
+                  "tools/mipos_order"
+                ]
+              },
+              {
+                "group": "Work Flow",
+                "pages": [
+                  "workflow/work-flow"
+                ]
+              },
+              {
+                "group": "Chat Flow",
+                "pages": [
+                  "chatflow/chat-flow"
+                ]
+              },
+              {
+                "group": "Tính năng mở rộng",
+                "pages": [
+                  "features/ql-workspace",
+                  "features/bao-cao-tong-quan",
+                  "features/lich-su-hoi-thoai"
+                ]
+              },
+              {
+                "group": "Kết nối đa kênh",
+                "pages": [
+                  "channels/tich-hop-messenger"
+                ]
+              },
+              {
+                "group": "Developers",
+                "pages": [
+                  "developers/developers"
+                ]
+              },
+              {
+                "group": "FAQ",
+                "pages": [
+                  "faq/faq"
                 ]
               }
             ]
